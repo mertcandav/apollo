@@ -1,0 +1,16 @@
+{
+  "name": "apollo",
+  "version": "1.0.0",
+  "description": "The Apollo discord bot",
+  "main": "apollo.js",
+  "scripts": {
+    "start": "node apollo.js"
+  },
+  "keywords": [
+    "javascript",
+    "discord-bot",
+    "bot"
+  ],
+  "author": "Mertcan Davulcu",
+  "license": "ISC"
+}
