@@ -24,13 +24,14 @@
 
 const discordjs = require("discord.js")
 const specialjson = require("./special.json")
+const botjson = require("./bot.json")
 
 //#endregion
 
 //#region Fields
 
 const client = new discordjs.Client()
-const prefix = ';'
+const prefix = botjson.prefix
 
 //#endregion
 
@@ -41,6 +42,6 @@ client.login(specialjson.token)
 client.on('ready', () => {
   client.user.setActivity(prefix + "help", { type: 'WATCHING' })
   console.log(`HEEEYY! ${client.user.tag} is woooorking!`)
-});
+})
 
 //#endregion
