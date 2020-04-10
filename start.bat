@@ -1,4 +1,4 @@
 :: Mertcan Davulcu
 
-:: start
+:: Start
 node ./src/apollo.js
