@@ -12,5 +12,8 @@
     "bot"
   ],
   "author": "Mertcan Davulcu",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.1.1"
+  }
 }
