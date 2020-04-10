@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# ignored src files.
+src/special.json

@@ -22,24 +22,25 @@
 
 //#region reuqire
 
-const discordjs = require("discord.js");
+const discordjs = require("discord.js")
+const specialjson = require("./special.json")
 
 //#endregion
 
 //#region Fields
 
-const client = new discordjs.Client();
-const prefix = ';';
+const client = new discordjs.Client()
+const prefix = ';'
 
 //#endregion
 
 //#region Starting
 
-client.login('Njk4Mjc5MjAxOTE2MTkwODQw.XpDqXQ.Kjcvuk7BIewFZiZcK1gbUN6h20I');
+client.login(specialjson.token)
 
 client.on('ready', () => {
-  client.user.setActivity(prefix + "help", { type: 'WATCHING' });
-  console.log(`HEEEYY! ${client.user.tag} is woooorking!`);
+  client.user.setActivity(prefix + "help", { type: 'WATCHING' })
+  console.log(`HEEEYY! ${client.user.tag} is woooorking!`)
 });
 
 //#endregion
