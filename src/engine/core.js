@@ -19,5 +19,11 @@ module.exports = {
         return val.indexOf("https://discord.gg") != -1 ||
             val.indexOf("http://discord.gg") != -1 ||
             val.indexOf("discord.gg/") != -1
+    },
+    getBoolValue: function(val) {
+        return val = val == "true" || val == "1" ?
+                true :
+                    val == "false" || val == "0" ?
+                    false : "invalid"
     }
 }

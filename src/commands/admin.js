@@ -57,10 +57,7 @@ module.exports = {
 function setInviteLinkProtection(msg,mval) {
     msg.delete()
     cache = mval.substring(21)
-    cache = cache == "true" || cache == "1" ?
-         true :
-            cache == "false" || cache == "0" ?
-            false : "invalid"
+    cache = corejs.getBoolValue(cache)
     if(cache == "invalid") {
         msg.reply("You have entered an invalid value!")
         return
