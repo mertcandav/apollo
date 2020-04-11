@@ -7,7 +7,7 @@ const serverjson = require("../../jsonbase/server.json")
 
 module.exports = {
     process: function(msg) {
-        mval = msg.content.substring(1).toLowerCase()
+        mval = corejs.cleanCommand(msg.content)
         if(mval == "random") {
             msg.reply(corejs.random(100).toString())
             return true

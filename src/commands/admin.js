@@ -1,13 +1,14 @@
 //#region require
 
 const serverjson = require("../../jsonbase/server.json")
+const corejs = require("../engine/core.js")
 const fs = require("fs")
 
 //#endregion
 
 module.exports = {
     process: function(msg) {
-        mval = msg.content.substring(1).toLowerCase()
+        mval = corejs.cleanCommand(msg.content)
         if(mval == "admins") {
             admins(msg.channel)
             return true
