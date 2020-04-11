@@ -59,8 +59,7 @@ function setjoinch(msg,mval) {
         return 
     }
     serverjson.channels.join = cache
-    jsonval = JSON.stringify(serverjson)
-    fs.writeFile("./jsonbase/server.json",jsonval,(err) => { })
+    corejs.saveJSON("./jsonbase/server.json",serverjson);
     msg.channel.send("<#" + cache + "> setted join channel!")
 }
 
@@ -73,8 +72,7 @@ function setleavech(msg,mval) {
         return 
     }
     serverjson.channels.leave = cache
-    jsonval = JSON.stringify(serverjson)
-    fs.writeFile("./jsonbase/server.json",jsonval,(err) => { })
+    corejs.saveJSON("./jsonbase/server.json",serverjson);
     msg.channel.send("<#" + cache + "> setted leave channel!")
 }
 
@@ -86,8 +84,7 @@ function setjoinmsg(msg,mval) {
         return 
     }
     serverjson.messages.join = cache
-    jsonval = JSON.stringify(serverjson)
-    fs.writeFile("./jsonbase/server.json",jsonval,(err) => { })
+    corejs.saveJSON("./jsonbase/server.json",serverjson);
     msg.channel.send("'" + cache + "' setted join message!")
 }
 
@@ -99,8 +96,7 @@ function setleavemsg(msg,mval) {
         return 
     }
     serverjson.messages.leave = cache
-    jsonval = JSON.stringify(serverjson)
-    fs.writeFile("./jsonbase/server.json",jsonval,(err) => { })
+    corejs.saveJSON("./jsonbase/server.json",serverjson);
     msg.channel.send("'" + cache + "' setted leave message!")
 }
 
@@ -113,8 +109,7 @@ function setadmin(msg,mval) {
         return
     }
     serverjson.admins.push(cache)
-    jsonval = JSON.stringify(serverjson)
-    fs.writeFile("./jsonbase/server.json",jsonval,(err) => { })
+    corejs.saveJSON("./jsonbase/server.json",serverjson);
     msg.channel.send("<@!" + cache + "> setted admin!")
 }
 
@@ -127,8 +122,7 @@ function removeadmin(msg,mval) {
         return
     }
     delete serverjson.admins.pop(cache)
-    jsonval = JSON.stringify(serverjson)
-    fs.writeFile("./jsonbase/server.json",jsonval,(err) => { })
+    corejs.saveJSON("./jsonbase/server.json",serverjson);
     msg.channel.send("<@!" + cache + "> removed from admins!")
 }
 
