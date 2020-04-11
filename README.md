@@ -13,7 +13,8 @@ Apollo dicord bot, for everyone.
 + Invite link protection
 + Banned word protection
 
-<a href="">Click for details.</a>
+Please refer to the documentation for details.
 
-# 
-+ <a href="https://github.com/mertcandav/apollo/wiki">Documentation<a/>
+---
+<a href="https://github.com/mertcandav/apollo/wiki/Warnings">Warnings<a/> <br>
+<a href="https://github.com/mertcandav/apollo/wiki">Documentation<a/>
