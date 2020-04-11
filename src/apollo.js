@@ -23,8 +23,8 @@
 //#region reuqire
 
 const discordjs = require("discord.js")
-const specialjson = require("./special.json")
-const botjson = require("./bot.json")
+const specialjson = require("../jsonbase/special.json")
+const botjson = require("../jsonbase/bot.json")
 
 //#endregion
 
