@@ -24,6 +24,8 @@
 
 const discordjs = require("discord.js")
 const adminjs = require("./commands/admin.js")
+const protectionjs = require("./engine/protection.js")
+const corejs = require("./engine/core.js")
 const memberjs = require("./commands/member.js")
 const serverjson = require("../jsonbase/server.json")
 const specialjson = require("../jsonbase/special.json")
@@ -66,6 +68,9 @@ client.on('guildMemberRemove', msg =>
 //#endregion
 
 client.on("message", msg => {
+	if(protectionjs.process(msg))
+		return
+
 	if(!msg.content.startsWith(";"))
 		return
 

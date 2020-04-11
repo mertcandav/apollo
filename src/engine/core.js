@@ -14,5 +14,10 @@ module.exports = {
     saveJSON: function(path,model) {
         jsonval = JSON.stringify(model,null,4)
         fs.writeFile(path,jsonval,(err) => { })
+    },
+    isInviteLink: function(val) {
+        return val.indexOf("https://discord.gg") != -1 ||
+            val.indexOf("http://discord.gg") != -1 ||
+            val.indexOf("discord.gg/") != -1
     }
 }

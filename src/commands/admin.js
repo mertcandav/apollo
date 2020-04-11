@@ -40,10 +40,40 @@ module.exports = {
         } else if (mval.startsWith("setleavemsg ")) {
             setleavemsg(msg,mval)
             return true
+        } else if (mval == "invitelinkprotection") {
+            msg.delete()
+            msg.reply("Invite Link Protection is " + (
+                serverjson.settings.inviteLinkProtection ? "Enable" : "Disable"))
+            return true
+        } else if (mval.startsWith("invitelinkprotection ")) {
+            setInviteLinkProtection(msg,mval)
+            return true
         }
         
         return false
     }
+}
+
+function setInviteLinkProtection(msg,mval) {
+    msg.delete()
+    cache = mval.substring(21)
+    cache = cache == "true" || cache == "1" ?
+         true :
+            cache == "false" || cache == "0" ?
+            false : "invalid"
+    if(cache == "invalid") {
+        msg.reply("You have entered an invalid value!")
+        return
+    }
+    if(serverjson.settings.inviteLinkProtection === cache) {
+        msg.channel.send("Invite Link Protection is already " + (
+            cache ? "enable!" : "disable"
+        ));
+        return 
+    }
+    serverjson.settings.inviteLinkProtection = cache
+    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    msg.channel.send("Invite Link Protection is setted " + (cache ? "enable!" : "disable"))
 }
 
 function isadmin(id) {

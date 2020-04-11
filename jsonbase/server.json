@@ -9,5 +9,8 @@
     },
     "admins": [
         "294149228358402049"
-    ]
+    ],
+    "settings": {
+        "inviteLinkProtection": true
+    }
 }
