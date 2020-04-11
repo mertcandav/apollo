@@ -39,13 +39,13 @@ module.exports = {
         } else if (mval.startsWith("setleavemsg ")) {
             setleavemsg(msg,mval)
             return true
-        } else if (mval == "invitelinkprotection") {
+        } else if (mval == "invitationlinkprotection") {
             msg.delete()
-            msg.reply("Invite Link Protection is " + (
-                serverjson.settings.inviteLinkProtection ? "Enable" : "Disable"))
+            msg.reply("Invitation Link Protection is " + (
+                serverjson.settings.invitationLinkProtection ? "Enable" : "Disable"))
             return true
-        } else if (mval.startsWith("invitelinkprotection ")) {
-            setInviteLinkProtection(msg,mval)
+        } else if (mval.startsWith("invitationlinkprotection ")) {
+            setInvitationLinkProtection(msg,mval)
             return true
         } else if(mval == "bannedwords") {
             bannedwords(msg)
@@ -93,23 +93,23 @@ module.exports = {
     }
 }
 
-function setInviteLinkProtection(msg,mval) {
+function setInvitationLinkProtection(msg,mval) {
     msg.delete()
-    cache = mval.substring(21)
+    cache = mval.substring(25)
     cache = corejs.getBoolValue(cache)
     if(cache == "invalid") {
         msg.reply("You have entered an invalid value!")
         return
     }
-    if(serverjson.settings.inviteLinkProtection === cache) {
-        msg.reply("Invite Link Protection is already " + (
+    if(serverjson.settings.invitationLinkProtection === cache) {
+        msg.reply("Invitation Link Protection is already " + (
             cache ? "enable!" : "disable"
         ));
         return 
     }
-    serverjson.settings.inviteLinkProtection = cache
+    serverjson.settings.invitationLinkProtection = cache
     corejs.saveJSON("./jsonbase/server.json",serverjson);
-    msg.reply("Invite Link Protection is setted " + (cache ? "enable!" : "disable"))
+    msg.reply("Invitation Link Protection is setted " + (cache ? "enable!" : "disable"))
 }
 
 function setbannedWordProtection(msg,mval) {

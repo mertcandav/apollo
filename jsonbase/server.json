@@ -11,9 +11,9 @@
         "294149228358402049"
     ],
     "settings": {
-        "inviteLinkProtection": false,
-        "bannedWordProtection": true,
-        "funUri": true
+        "invitationLinkProtection": false,
+        "bannedWordProtection": false,
+        "funUri": false
     },
     "values": {
         "bannedWords": [
