@@ -7,6 +7,7 @@ Apollo dicord bot, for everyone.
 <br>
 
 ## Features
++ Easy customizable
 + Admin management
 + Moderation commands
 + Public commands for everyone
