@@ -23,6 +23,8 @@
 //#region reuqire
 
 const discordjs = require("discord.js")
+const adminjs = require("./commands/admin.js")
+const serverjson = require("../jsonbase/server.json")
 const specialjson = require("../jsonbase/special.json")
 const botjson = require("../jsonbase/bot.json")
 
@@ -43,5 +45,48 @@ client.on('ready', () => {
   client.user.setActivity(prefix + "help", { type: 'WATCHING' })
   console.log(`HEEEYY! ${client.user.tag} is woooorking!`)
 })
+
+//#endregion
+
+//#region Join - Leave
+
+client.on('guildMemberAdd', msg =>
+{
+  msg.guild.channels.get(serverjson.channels.join).send("<@" + msg.user.id + ">" + serverjson.messages.join)
+  return
+})
+
+client.on('guildMemberRemove', msg =>
+{
+  msg.guild.channels.get(serverjson.channels.leave).send("<@" + msg.user.id + ">" + serverjson.messages.leave)
+  return
+})
+
+//#endregion
+
+client.on('message', msg => {
+	if(!msg.content.startsWith(";"))
+		return;
+
+	if(serverjson.admins.indexOf(msg.member.id) != -1) {
+		adminjs.process(msg.channel,msg.content.substring(1).toLowerCase());
+	}
+})
+
+//#region Admins
+
+function processAdmin(channel,msg) {
+    if(msg == "admins") {
+        admins(channel);
+    }
+}
+
+function admins(channel){
+	let val = "";
+    all = serverjson.admins.forEach((key) => {
+		val += "<@!" + key + ">";
+	})
+    channel.send(val);
+}
 
 //#endregion
