@@ -12,13 +12,17 @@
     ],
     "settings": {
         "inviteLinkProtection": false,
-        "bannedWordProtection": false
+        "bannedWordProtection": true,
+        "funUri": true
     },
     "values": {
         "bannedWords": [
             "fuck",
             "shit",
             "bitch"
+        ],
+        "funUris": [
+            "https://www.youtube.com/watch?v=jNitjm7N2Yc"
         ]
     }
 }

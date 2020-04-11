@@ -68,6 +68,25 @@ module.exports = {
         } else if (mval.startsWith("bannedwordprotection ")) {
             setbannedWordProtection(msg,mval)
             return true
+        }  else if(mval.startsWith("addfunuri ")) {
+            addFunUri(msg)
+            return true
+        } else if(mval.startsWith("delfunuri ")) {
+            delFunUri(msg)
+            return true
+        } else if(mval.startsWith("isfunuri ")) {
+            msg.delete();
+            cache = msg.content.substring(10)
+            msg.reply("``" + cache + "`` is " + (corejs.isfunuri(cache) ? "Fun Uri!" : "not Fun Uri!"))
+            return true
+        } else if (mval == "funuri") {
+            msg.delete()
+            msg.reply("Fun Uri is " + (
+                serverjson.settings.funUri ? "Enable" : "Disable"))
+            return true
+        } else if (mval.startsWith("funuri ")) {
+            setFunUri(msg,mval)
+            return true
         }
         
         return false
@@ -166,7 +185,7 @@ function setadmin(msg,mval) {
     msg.delete()
     cache = mval.substring(12)
     cache = cache.substring(0,cache.length-1)
-    if(isadmin(cache) == true) {
+    if(corejs.isadmin(cache) == true) {
         msg.reply("<@!" + cache + "> already is admin!")
         return
     }
@@ -179,7 +198,7 @@ function unadmin(msg,mval) {
     msg.delete()
     cache = mval.substring(11)
     cache = cache.substring(0,cache.length-1)
-    if(isadmin(cache) == false) {
+    if(corejs.isadmin(cache) == false) {
         msg.reply("<@!" + cache + "> already is not admin!")
         return
     }
@@ -199,7 +218,7 @@ function admins(msg) {
 function banword(msg,mval) {
     msg.delete()
     cache = mval.substring(8)
-    if(isbannedword(cache) == true) {
+    if(corejs.isbannedword(cache) == true) {
         msg.reply("``" + cache + "`` already is banned word!")
         return
     }
@@ -211,7 +230,7 @@ function banword(msg,mval) {
 function unbanword(msg,mval) {
     msg.delete()
     cache = mval.substring(10)
-    if(isbannedword(cache) == false) {
+    if(corejs.isbannedword(cache) == false) {
         msg.reply("``" + cache + "`` already is not banned word!")
         return
     }
@@ -232,4 +251,47 @@ function bannedwords(msg) {
         dex++
     })
     msg.reply(val)
+}
+
+function setFunUri(msg,mval) {
+    msg.delete()
+    cache = mval.substring(7)
+    cache = corejs.getBoolValue(cache)
+    if(cache == "invalid") {
+        msg.reply("You have entered an invalid value!")
+        return
+    }
+    if(serverjson.settings.funUri === cache) {
+        msg.reply("Fun Uri feature is already " + (
+            cache ? "enable!" : "disable"
+        ));
+        return 
+    }
+    serverjson.settings.funUri = cache
+    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    msg.reply("Fun Uri feature is setted " + (cache ? "enable!" : "disable"))
+}
+
+function addFunUri(msg) {
+    msg.delete()
+    cache = msg.content.substring(11)
+    if(corejs.isfunuri(cache) == true) {
+        msg.reply("``" + cache + "`` already is Fun Uri!")
+        return
+    }
+    serverjson.values.funUris.push(cache)
+    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    msg.reply("``" + cache + "` added to Fun Uri!")
+}
+
+function delFunUri(msg) {
+    msg.delete()
+    cache = msg.content.substring(11)
+    if(corejs.isfunuri(cache) == false) {
+        msg.reply("``" + cache + "`` already is not Fun Uri!")
+        return
+    }
+    delete serverjson.values.funUris.pop(cache)
+    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    msg.reply("``" + cache + "`` removed from Fun Uris!")
 }

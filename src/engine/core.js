@@ -1,6 +1,7 @@
 //#region require
 
-const fs = require("fs");
+const serverjson = require("../../jsonbase/server.json")
+const fs = require("fs")
 
 //#endregion
 
@@ -9,7 +10,8 @@ module.exports = {
         return cmd.substring(1).toLowerCase()
     },
     random: function(number) {
-        return Math.floor(Math.random() * number) + 1
+        number++
+        return Math.floor(Math.random() * number)
     },
     saveJSON: function(path,model) {
         jsonval = JSON.stringify(model,null,4)
@@ -31,5 +33,8 @@ module.exports = {
     },
     isbannedword: function(val) {
         return serverjson.values.bannedWords.indexOf(val) != -1
+    },
+    isfunuri: function(val) {
+        return serverjson.values.funUris.indexOf(val) != -1
     }   
 }
