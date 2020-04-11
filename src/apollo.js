@@ -24,6 +24,7 @@
 
 const discordjs = require("discord.js")
 const adminjs = require("./commands/admin.js")
+const memberjs = require("./commands/member.js")
 const serverjson = require("../jsonbase/server.json")
 const specialjson = require("../jsonbase/special.json")
 const botjson = require("../jsonbase/bot.json")
@@ -64,11 +65,15 @@ client.on('guildMemberRemove', msg =>
 
 //#endregion
 
-client.on('message', msg => {
+client.on("message", msg => {
 	if(!msg.content.startsWith(";"))
-		return;
+		return
 
-	if(serverjson.admins.indexOf(msg.member.id) != -1) {
-		adminjs.process(msg);
+	if(serverjson.admins.indexOf(msg.member.id) != -1 && adminjs.process(msg)) {
+		return
+	} else if(memberjs.process(msg)) {
+		return
+	} else {
+		msg.reply("Hmm, this command is not defined!")
 	}
 })

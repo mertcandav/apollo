@@ -10,29 +10,38 @@ module.exports = {
         mval = msg.content.substring(1).toLowerCase()
         if(mval == "admins") {
             admins(msg.channel)
+            return true
         } else if(mval.startsWith("setadmin ")) {
             setadmin(msg,mval)
+            return true
         } else if(mval.startsWith("unadmin ")) {
             removeadmin(msg,mval)
+            return true
         } else if(mval.startsWith("isadmin ")) {
             cache = mval.substring(11)
             cache = cache.substring(0,cache.length-1)
             msg.channel.send("<@!" + cache + "> is " + (isadmin(cache) ? "admin!" : "not admin!"))
+            return true
         } else if (mval.startsWith("write ")) {
             msg.delete()
             cache = mval.substring(6)
             msg.channel.send(cache)
+            return true
         } else if (mval.startsWith("setjoinch ")) {
             setjoinch(msg,mval)
+            return true
         } else if (mval.startsWith("setleavech ")) {
             setleavech(msg,mval)
+            return true
         } else if (mval.startsWith("setjoinmsg ")) {
             setjoinmsg(msg,mval)
+            return true
         } else if (mval.startsWith("setleavemsg ")) {
             setleavemsg(msg,mval)
-        } else {
-            msg.channel.send("Hmm, this command is not defined!")
+            return true
         }
+        
+        return false
     }
 }
 
