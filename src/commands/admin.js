@@ -12,7 +12,7 @@ module.exports = {
             admins(msg.channel)
         } else if(mval.startsWith("setadmin ")) {
             setadmin(msg,mval)
-        } else if(mval.startsWith("removeadmin ")) {
+        } else if(mval.startsWith("unadmin ")) {
             removeadmin(msg,mval)
         } else if(mval.startsWith("isadmin ")) {
             cache = mval.substring(11)
