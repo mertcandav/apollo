@@ -17,7 +17,13 @@ module.exports = {
         } else if(mval.startsWith("isadmin ")) {
             cache = mval.substring(11)
             cache = cache.substring(0,cache.length-1)
-            msg.channel.send("<@!" + cache + "> is " + (isadmin(cache) ? "admin!" : "not admin!"));
+            msg.channel.send("<@!" + cache + "> is " + (isadmin(cache) ? "admin!" : "not admin!"))
+        } else if (mval.startsWith("write ")) {
+            msg.delete()
+            cache = mval.substring(6)
+            msg.channel.send(cache)
+        } else {
+            msg.channel.send("Hmm, this command is not defined!");
         }
     }
 }
