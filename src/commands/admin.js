@@ -11,9 +11,9 @@ module.exports = {
         if(mval == "admins") {
             admins(msg.channel)
         } else if(mval.startsWith("setadmin ")) {
-            setadmin(mval)
+            setadmin(msg,mval)
         } else if(mval.startsWith("removeadmin ")) {
-            removeadmin(mval)
+            removeadmin(msg,mval)
         } else if(mval.startsWith("isadmin ")) {
             cache = mval.substring(11)
             cache = cache.substring(0,cache.length-1)
@@ -32,24 +32,32 @@ function isadmin(id) {
     return serverjson.admins.indexOf(id) != -1
 }
 
-function setadmin(mval) {
+function setadmin(msg,mval) {
+    msg.delete()
     cache = mval.substring(12)
     cache = cache.substring(0,cache.length-1)
-    if(isadmin(cache) == true)
+    if(isadmin(cache) == true) {
+        msg.channel.send("<@!" + cache + "> already is admin!")
         return
+    }
     serverjson.admins.push(cache)
     jsonval = JSON.stringify(serverjson)
     fs.writeFile("./jsonbase/server.json",jsonval,(err) => { })
+    msg.channel.send("<@!" + cache + "> setted admin!")
 }
 
-function removeadmin(mval) {
+function removeadmin(msg,mval) {
+    msg.delete()
     cache = mval.substring(12)
-    cache = cache.substring(0,cache.length-1)
-    if(isadmin(cache) == true)
-        return;
+    cache = cache.substring(3,cache.length-1)
+    if(isadmin(cache) == false) {
+        msg.channel.send("<@!" + cache + "> already is not admin!")
+        return
+    }
     delete serverjson.admins.pop(cache)
     jsonval = JSON.stringify(serverjson)
     fs.writeFile("./jsonbase/server.json",jsonval,(err) => { })
+    msg.channel.send("<@!" + cache + "> removed from admins!")
 }
 
 function admins(channel) {
