@@ -11,6 +11,14 @@
         "294149228358402049"
     ],
     "settings": {
-        "inviteLinkProtection": false
+        "inviteLinkProtection": false,
+        "bannedWordProtection": false
+    },
+    "values": {
+        "bannedWords": [
+            "fuck",
+            "shit",
+            "bitch"
+        ]
     }
 }

@@ -10,7 +10,7 @@ module.exports = {
     process: function(msg) {
         mval = corejs.cleanCommand(msg.content)
         if(mval == "admins") {
-            admins(msg.channel)
+            admins(msg)
             return true
         } else if(mval.startsWith("setadmin ")) {
             setadmin(msg,mval)
@@ -21,7 +21,7 @@ module.exports = {
         } else if(mval.startsWith("isadmin ")) {
             cache = mval.substring(11)
             cache = cache.substring(0,cache.length-1)
-            msg.channel.send("<@!" + cache + "> is " + (isadmin(cache) ? "admin!" : "not admin!"))
+            msg.reply("<@!" + cache + "> is " + (isadmin(cache) ? "admin!" : "not admin!"))
             return true
         } else if (mval.startsWith("write ")) {
             msg.delete()
@@ -48,6 +48,27 @@ module.exports = {
         } else if (mval.startsWith("invitelinkprotection ")) {
             setInviteLinkProtection(msg,mval)
             return true
+        } else if(mval == "bannedwords") {
+            bannedwords(msg)
+            return true
+        } else if(mval.startsWith("banword ")) {
+            banword(msg,mval)
+            return true
+        } else if(mval.startsWith("unbanword ")) {
+            unbanword(msg,mval)
+            return true
+        } else if(mval.startsWith("isbannedword ")) {
+            cache = mval.substring(13)
+            msg.reply("``" + cache + "`` is " + (isbannedword(cache) ? "banned word!" : "not banned word!"))
+            return true
+        } else if (mval == "bannedwordprotection") {
+            msg.delete()
+            msg.reply("Banned Word Protection is " + (
+                serverjson.settings.bannedWordProtection ? "Enable" : "Disable"))
+            return true
+        } else if (mval.startsWith("bannedwordprotection ")) {
+            setbannedWordProtection(msg,mval)
+            return true
         }
         
         return false
@@ -71,6 +92,25 @@ function setInviteLinkProtection(msg,mval) {
     serverjson.settings.inviteLinkProtection = cache
     corejs.saveJSON("./jsonbase/server.json",serverjson);
     msg.reply("Invite Link Protection is setted " + (cache ? "enable!" : "disable"))
+}
+
+function setbannedWordProtection(msg,mval) {
+    msg.delete()
+    cache = mval.substring(21)
+    cache = corejs.getBoolValue(cache)
+    if(cache == "invalid") {
+        msg.reply("You have entered an invalid value!")
+        return
+    }
+    if(serverjson.settings.bannedWordProtection === cache) {
+        msg.reply("Banned Word Protection is already " + (
+            cache ? "enable!" : "disable"
+        ));
+        return 
+    }
+    serverjson.settings.bannedWordProtection = cache
+    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    msg.reply("Banned Word Protection is setted " + (cache ? "enable!" : "disable"))
 }
 
 function isadmin(id) {
@@ -145,18 +185,60 @@ function unadmin(msg,mval) {
     cache = mval.substring(11)
     cache = cache.substring(0,cache.length-1)
     if(isadmin(cache) == false) {
-        msg.channel.send("<@!" + cache + "> already is not admin!")
+        msg.reply("<@!" + cache + "> already is not admin!")
         return
     }
     delete serverjson.admins.pop(cache)
     corejs.saveJSON("./jsonbase/server.json",serverjson);
-    msg.channel.send("<@!" + cache + "> removed from admins!")
+    msg.reply("<@!" + cache + "> removed from admins!")
 }
 
-function admins(channel) {
-    let val = ""
-    all = serverjson.admins.forEach((key) => {
+function admins(msg) {
+    let val = "Admins;\n"
+    serverjson.admins.forEach((key) => {
         val += "<@!" + key + ">\n"
     })
-    channel.send(val)
+    msg.reply(val)
+}
+
+function banword(msg,mval) {
+    msg.delete()
+    cache = mval.substring(8)
+    if(isbannedword(cache) == true) {
+        msg.reply("``" + cache + "`` already is banned word!")
+        return
+    }
+    serverjson.values.bannedWords.push(cache)
+    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    msg.reply("``" + cache + "` added to banned words!")
+}
+
+function unbanword(msg,mval) {
+    msg.delete()
+    cache = mval.substring(10)
+    if(isbannedword(cache) == false) {
+        msg.reply("``" + cache + "`` already is not banned word!")
+        return
+    }
+    delete serverjson.values.bannedWords.pop(cache)
+    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    msg.reply("``" + cache + "`` removed from banned words!")
+}
+
+function bannedwords(msg) {
+    let val = "Banned Words;\n"
+    let dex = 1;
+    serverjson.values.bannedWords.forEach((key) => {
+        val += "``" + key + "`` "
+        if(dex == 3) {
+            val += "\n"
+            dex = 0
+        }
+        dex++
+    })
+    msg.reply(val)
+}
+
+function isbannedword(val) {
+    return serverjson.values.bannedWords.indexOf(val) != -1
 }
