@@ -24,6 +24,8 @@ module.exports = {
             msg.channel.send(cache)
         } else if (mval.startsWith("setjoinch ")) {
             setjoinch(msg,mval)
+        } else if (mval.startsWith("setleavech ")) {
+            setleavech(msg,mval)
         } else {
             msg.channel.send("Hmm, this command is not defined!")
         }
@@ -46,6 +48,20 @@ function setjoinch(msg,mval) {
     jsonval = JSON.stringify(serverjson)
     fs.writeFile("./jsonbase/server.json",jsonval,(err) => { })
     msg.channel.send("<#" + cache + "> setted join channel!")
+}
+
+function setleavech(msg,mval) {
+    msg.delete()
+    cache = mval.substring(13)
+    cache = cache.substring(0,cache.length-1)
+    if(serverjson.channels.leave === cache) {
+        msg.channel.send("<#" + cache + "> is already set as leave cahannel!");
+        return 
+    }
+    serverjson.channels.leave = cache
+    jsonval = JSON.stringify(serverjson)
+    fs.writeFile("./jsonbase/server.json",jsonval,(err) => { })
+    msg.channel.send("<#" + cache + "> setted leave channel!")
 }
 
 function setadmin(msg,mval) {
