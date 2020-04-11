@@ -22,14 +22,30 @@ module.exports = {
             msg.delete()
             cache = mval.substring(6)
             msg.channel.send(cache)
+        } else if (mval.startsWith("setjoinch ")) {
+            setjoinch(msg,mval)
         } else {
-            msg.channel.send("Hmm, this command is not defined!");
+            msg.channel.send("Hmm, this command is not defined!")
         }
     }
 }
 
 function isadmin(id) {
     return serverjson.admins.indexOf(id) != -1
+}
+
+function setjoinch(msg,mval) {
+    msg.delete()
+    cache = mval.substring(12)
+    cache = cache.substring(0,cache.length-1)
+    if(serverjson.channels.join === cache) {
+        msg.channel.send("<#" + cache + "> is already set as join cahannel!");
+        return 
+    }
+    serverjson.channels.join = cache
+    jsonval = JSON.stringify(serverjson)
+    fs.writeFile("./jsonbase/server.json",jsonval,(err) => { })
+    msg.channel.send("<#" + cache + "> setted join channel!")
 }
 
 function setadmin(msg,mval) {
