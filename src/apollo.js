@@ -69,24 +69,6 @@ client.on('message', msg => {
 		return;
 
 	if(serverjson.admins.indexOf(msg.member.id) != -1) {
-		adminjs.process(msg.channel,msg.content.substring(1).toLowerCase());
+		adminjs.process(msg);
 	}
 })
-
-//#region Admins
-
-function processAdmin(channel,msg) {
-    if(msg == "admins") {
-        admins(channel);
-    }
-}
-
-function admins(channel){
-	let val = "";
-    all = serverjson.admins.forEach((key) => {
-		val += "<@!" + key + ">";
-	})
-    channel.send(val);
-}
-
-//#endregion
