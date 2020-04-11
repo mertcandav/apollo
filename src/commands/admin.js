@@ -28,6 +28,8 @@ module.exports = {
             setleavech(msg,mval)
         } else if (mval.startsWith("setjoinmsg ")) {
             setjoinmsg(msg,mval)
+        } else if (mval.startsWith("setleavemsg ")) {
+            setleavemsg(msg,mval)
         } else {
             msg.channel.send("Hmm, this command is not defined!")
         }
@@ -77,6 +79,19 @@ function setjoinmsg(msg,mval) {
     jsonval = JSON.stringify(serverjson)
     fs.writeFile("./jsonbase/server.json",jsonval,(err) => { })
     msg.channel.send("'" + cache + "' setted join message!")
+}
+
+function setleavemsg(msg,mval) {
+    msg.delete()
+    cache = mval.substring(12)
+    if(serverjson.messages.leave === cache) {
+        msg.channel.send("'" + cache + "' is already set as leave message!");
+        return 
+    }
+    serverjson.messages.leave = cache
+    jsonval = JSON.stringify(serverjson)
+    fs.writeFile("./jsonbase/server.json",jsonval,(err) => { })
+    msg.channel.send("'" + cache + "' setted leave message!")
 }
 
 function setadmin(msg,mval) {
