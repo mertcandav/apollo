@@ -2,7 +2,6 @@
 
 const serverjson = require("../../jsonbase/server.json")
 const corejs = require("../engine/core.js")
-const fs = require("fs")
 
 //#endregion
 
@@ -21,7 +20,7 @@ module.exports = {
         } else if(mval.startsWith("isadmin ")) {
             cache = mval.substring(11)
             cache = cache.substring(0,cache.length-1)
-            msg.reply("<@!" + cache + "> is " + (isadmin(cache) ? "admin!" : "not admin!"))
+            msg.reply("<@!" + cache + "> is " + (corejs.isadmin(cache) ? "admin!" : "not admin!"))
             return true
         } else if (mval.startsWith("write ")) {
             msg.delete()
@@ -59,7 +58,7 @@ module.exports = {
             return true
         } else if(mval.startsWith("isbannedword ")) {
             cache = mval.substring(13)
-            msg.reply("``" + cache + "`` is " + (isbannedword(cache) ? "banned word!" : "not banned word!"))
+            msg.reply("``" + cache + "`` is " + (corejs.isbannedword(cache) ? "banned word!" : "not banned word!"))
             return true
         } else if (mval == "bannedwordprotection") {
             msg.delete()
@@ -111,10 +110,6 @@ function setbannedWordProtection(msg,mval) {
     serverjson.settings.bannedWordProtection = cache
     corejs.saveJSON("./jsonbase/server.json",serverjson);
     msg.reply("Banned Word Protection is setted " + (cache ? "enable!" : "disable"))
-}
-
-function isadmin(id) {
-    return serverjson.admins.indexOf(id) != -1
 }
 
 function setjoinch(msg,mval) {
@@ -237,8 +232,4 @@ function bannedwords(msg) {
         dex++
     })
     msg.reply(val)
-}
-
-function isbannedword(val) {
-    return serverjson.values.bannedWords.indexOf(val) != -1
 }

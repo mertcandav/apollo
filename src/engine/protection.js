@@ -13,6 +13,14 @@ module.exports = {
                 msg.reply("Ups, you've got invite link protection, please follow the rules!")
                 return true
             }
+        } else if(serverjson.settings.bannedWordProtection) {
+            for(let key of serverjson.values.bannedWords) {
+                if(msg.content.includes(key)) {
+                    msg.delete()
+                    msg.reply("Ups, you've got banned word protection, please follow the rules!")
+                    return true
+                }
+            }
         }
 
         return false

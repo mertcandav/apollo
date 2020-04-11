@@ -25,5 +25,11 @@ module.exports = {
                 true :
                     val == "false" || val == "0" ?
                     false : "invalid"
-    }
+    },
+    isadmin: function(id) {
+        return serverjson.admins.indexOf(id) != -1
+    },
+    isbannedword: function(val) {
+        return serverjson.values.bannedWords.indexOf(val) != -1
+    }   
 }
