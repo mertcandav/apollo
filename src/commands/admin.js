@@ -16,7 +16,7 @@ module.exports = {
             setadmin(msg,mval)
             return true
         } else if(mval.startsWith("unadmin ")) {
-            removeadmin(msg,mval)
+            unadmin(msg,mval)
             return true
         } else if(mval.startsWith("isadmin ")) {
             cache = mval.substring(11)
@@ -113,10 +113,10 @@ function setadmin(msg,mval) {
     msg.channel.send("<@!" + cache + "> setted admin!")
 }
 
-function removeadmin(msg,mval) {
+function unadmin(msg,mval) {
     msg.delete()
-    cache = mval.substring(12)
-    cache = cache.substring(3,cache.length-1)
+    cache = mval.substring(11)
+    cache = cache.substring(0,cache.length-1)
     if(isadmin(cache) == false) {
         msg.channel.send("<@!" + cache + "> already is not admin!")
         return
