@@ -13,7 +13,7 @@ module.exports = {
             msg.reply("Author is " + botjson.info.author + "\nGitHub: " + botjson.info.authorgituri)
             return true
         } else if(mval == "repostory" || mval == "repo" || mval == "gitrepo") {
-            msg.reply("Git repostory link;\n" + botjson.info.gituri)
+            msg.reply("GitHub repostory link of apollo;\n" + botjson.info.gituri)
             return true
         } else if(mval == "random") {
             msg.reply(corejs.random(100).toString())
