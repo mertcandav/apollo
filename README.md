@@ -12,8 +12,9 @@ Apollo dicord bot, for everyone.
 + Admin management
 + Moderation commands
 + Public commands for everyone
-+ Invite link protection
++ Invitation link protection
 + Banned word protection
++ Apollo Fun Uri
 
 Please refer to the documentation for details.
 
