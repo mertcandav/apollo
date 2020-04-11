@@ -63,14 +63,14 @@ function setInviteLinkProtection(msg,mval) {
         return
     }
     if(serverjson.settings.inviteLinkProtection === cache) {
-        msg.channel.send("Invite Link Protection is already " + (
+        msg.reply("Invite Link Protection is already " + (
             cache ? "enable!" : "disable"
         ));
         return 
     }
     serverjson.settings.inviteLinkProtection = cache
     corejs.saveJSON("./jsonbase/server.json",serverjson);
-    msg.channel.send("Invite Link Protection is setted " + (cache ? "enable!" : "disable"))
+    msg.reply("Invite Link Protection is setted " + (cache ? "enable!" : "disable"))
 }
 
 function isadmin(id) {
@@ -82,12 +82,12 @@ function setjoinch(msg,mval) {
     cache = mval.substring(12)
     cache = cache.substring(0,cache.length-1)
     if(serverjson.channels.join === cache) {
-        msg.channel.send("<#" + cache + "> is already set as join cahannel!");
+        msg.reply("<#" + cache + "> is already set as join cahannel!");
         return 
     }
     serverjson.channels.join = cache
     corejs.saveJSON("./jsonbase/server.json",serverjson);
-    msg.channel.send("<#" + cache + "> setted join channel!")
+    msg.reply("<#" + cache + "> setted join channel!")
 }
 
 function setleavech(msg,mval) {
@@ -95,36 +95,36 @@ function setleavech(msg,mval) {
     cache = mval.substring(13)
     cache = cache.substring(0,cache.length-1)
     if(serverjson.channels.leave === cache) {
-        msg.channel.send("<#" + cache + "> is already set as leave cahannel!");
+        msg.reply("<#" + cache + "> is already set as leave cahannel!");
         return 
     }
     serverjson.channels.leave = cache
     corejs.saveJSON("./jsonbase/server.json",serverjson);
-    msg.channel.send("<#" + cache + "> setted leave channel!")
+    msg.reply("<#" + cache + "> setted leave channel!")
 }
 
 function setjoinmsg(msg,mval) {
     msg.delete()
     cache = mval.substring(11)
     if(serverjson.messages.join === cache) {
-        msg.channel.send("'" + cache + "' is already set as join message!");
+        msg.reply("'" + cache + "' is already set as join message!");
         return 
     }
     serverjson.messages.join = cache
     corejs.saveJSON("./jsonbase/server.json",serverjson);
-    msg.channel.send("'" + cache + "' setted join message!")
+    msg.reply("'" + cache + "' setted join message!")
 }
 
 function setleavemsg(msg,mval) {
     msg.delete()
     cache = mval.substring(12)
     if(serverjson.messages.leave === cache) {
-        msg.channel.send("'" + cache + "' is already set as leave message!");
+        msg.reply("'" + cache + "' is already set as leave message!");
         return 
     }
     serverjson.messages.leave = cache
     corejs.saveJSON("./jsonbase/server.json",serverjson);
-    msg.channel.send("'" + cache + "' setted leave message!")
+    msg.reply("'" + cache + "' setted leave message!")
 }
 
 function setadmin(msg,mval) {
@@ -132,12 +132,12 @@ function setadmin(msg,mval) {
     cache = mval.substring(12)
     cache = cache.substring(0,cache.length-1)
     if(isadmin(cache) == true) {
-        msg.channel.send("<@!" + cache + "> already is admin!")
+        msg.reply("<@!" + cache + "> already is admin!")
         return
     }
     serverjson.admins.push(cache)
     corejs.saveJSON("./jsonbase/server.json",serverjson);
-    msg.channel.send("<@!" + cache + "> setted admin!")
+    msg.reply("<@!" + cache + "> setted admin!")
 }
 
 function unadmin(msg,mval) {
