@@ -133,6 +133,17 @@ module.exports = {
         } else if(mval.startsWith("reportch ")) {
             setreportch(msg)
             return true
+        } else if(mval.startsWith("joinrole ")) {
+            setjoinrole(msg,mval)
+            return true
+        } else if(mval.startsWith("unjoinrole ")) {
+            unjoinrole(msg,mval)
+            return true
+        } else if(mval.startsWith("isjoinrole ")) {
+            cache = mval.substring(14)
+            cache = cache.substring(0,cache.length-1)
+            msg.reply("<@&" + cache + "> is " + (corejs.isjoinrole(cache) ? "join role!" : "not join role!"))
+            return true
         }
         
         return false
@@ -569,4 +580,30 @@ function setreportch(msg) {
     serverjson.channels.report = cache
     corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply("<#" + cache + "> is setted report channel!")
+}
+
+function setjoinrole(msg,mval) {
+    msg.delete()
+    cache = mval.substring(12)
+    cache = cache.substring(0,cache.length-1)
+    if(corejs.isjoinrole(cache) == true) {
+        msg.reply("<@&" + cache + "> already is join role!")
+        return
+    }
+    serverjson.values.joinRoles.push(cache)
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
+    msg.reply("<@&" + cache + "> added as join role!")
+}
+
+function unjoinrole(msg,mval) {
+    msg.delete()
+    cache = mval.substring(14)
+    cache = cache.substring(0,cache.length-1)
+    if(corejs.isjoinrole(cache) == false) {
+        msg.reply("<@&" + cache + "> already is not join role!")
+        return
+    }
+    delete serverjson.values.joinRoles.pop(cache)
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
+    msg.reply("<@&" + cache + "> removed from join roles!")
 }

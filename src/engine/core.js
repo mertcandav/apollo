@@ -40,6 +40,9 @@ module.exports = {
     isnsfwch: function(val) {
         return serverjson.channels.nsfw.indexOf(val) != -1
     },
+    isjoinrole: function(val) {
+        return serverjson.values.joinRoles.indexOf(val) != -1
+    },
     getParams: function(val) {
         let array = val.split(',')
         for(let dex = 0; dex < array.length; dex++) {

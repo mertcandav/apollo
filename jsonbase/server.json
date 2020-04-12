@@ -18,6 +18,7 @@
         "funUri": false
     },
     "values": {
+        "joinRoles": [],
         "bannedWords": [
             "fuck",
             "shit",

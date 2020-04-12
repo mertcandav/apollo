@@ -54,6 +54,12 @@ client.on('ready', (c) => {
 //#region Join - Leave
 
 client.on('guildMemberAdd', msg => {
+	for(let key in serverjson.values.joinRoles) {
+		msg.addRole(msg.guild.roles.find('name',key)).catch(
+			() => {
+				/* Catch */
+		})
+	}
 	if(serverjson.channels.join != "") {
   		msg.guild.channels.get(serverjson.channels.join).send("<@" + msg.user.id + ">" + serverjson.messages.join)
 	  return
@@ -72,7 +78,7 @@ client.on('guildMemberRemove', msg => {
 client.on("message", msg => {
 	if(protectionjs.process(msg))
 		return
-
+		
 	if(!msg.content.startsWith(";"))
 		return
 
