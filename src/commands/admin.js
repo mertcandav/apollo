@@ -35,6 +35,30 @@ module.exports = {
             cache = mval.substring(6)
             msg.channel.send(cache)
             return true
+        } else if (mval == "joinch") {
+            msg.delete()
+            if(serverjson.channels.join != "") {
+                msg.reply("Join channel is <#" + serverjson.channels.join + ">")
+            } else {
+                msg.reply("Ups! No join channels are set!")
+            }
+            return true
+        } else if (mval == "leavech") {
+            msg.delete()
+            if(serverjson.channels.leave != "") {
+                msg.reply("Leave channels is <#" + serverjson.channels.leave + ">")
+            } else {
+                msg.reply("Ups! No leave channels are set!")
+            }
+            return true
+        } else if (mval == "joinmsg") {
+            msg.delete()
+            msg.reply("Join message is '" + serverjson.messages.join + "'")
+            return true
+        } else if (mval == "leavemsg") {
+            msg.delete()
+            msg.reply("Leave message is '" + serverjson.messages.leave + "'")
+            return true
         } else if (mval.startsWith("joinch ")) {
             setjoinch(msg)
             return true
