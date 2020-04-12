@@ -18,6 +18,7 @@ Apollo dicord bot, for everyone.
 + Apollo FunUri
 + Random number generator
 + Voting
++ Apollo Report
 
 Please refer to the documentation for details.
 
