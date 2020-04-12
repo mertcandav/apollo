@@ -11,6 +11,7 @@ Apollo dicord bot, for everyone.
 + Easy customizable
 + Admin management
 + Moderation commands
++ Automatic role inserter on first login
 + Public commands for everyone
 + Invitation link protection
 + Banned word protection
