@@ -16,6 +16,7 @@ Apollo dicord bot, for everyone.
 + Banned word protection
 + Nsfw channel managements
 + Apollo FunUri
++ Random number generator
 
 Please refer to the documentation for details.
 
