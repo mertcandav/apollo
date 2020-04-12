@@ -17,6 +17,7 @@ Apollo dicord bot, for everyone.
 + Nsfw channel managements
 + Apollo FunUri
 + Random number generator
++ Voting
 
 Please refer to the documentation for details.
 
