@@ -45,7 +45,7 @@ const prefix = botjson.prefix
 client.login(specialjson.token)
 
 client.on('ready', (c) => {
-  client.user.setActivity(prefix + "help", { type: 'WATCHING' })
+  client.user.setActivity("COVID-19 news", { type: "WATCHING" })
   console.log(`HEEEYY! ${client.user.tag} is woooorking!`)
 })
 
