@@ -7,7 +7,7 @@ const fs = require("fs")
 
 module.exports = {
     cleanCommand: function(cmd) {
-        return cmd.substring(1).toLowerCase()
+        return cmd.substring(1).toLowerCase().trimRight().trimLeft();
     },
     random: function(number) {
         number++

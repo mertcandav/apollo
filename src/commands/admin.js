@@ -282,7 +282,7 @@ function setFunUri(msg,mval) {
 
 function addFunUri(msg) {
     msg.delete()
-    cache = msg.content.substring(11)
+    cache = corejs.cleanCommand(msg.content.substring(11))
     if(corejs.isfunuri(cache) == true) {
         msg.reply("``" + cache + "`` already is Fun Uri!")
         return
@@ -294,7 +294,7 @@ function addFunUri(msg) {
 
 function delFunUri(msg) {
     msg.delete()
-    cache = msg.content.substring(11)
+    cache = corejs.cleanCommand(msg.content.substring(11))
     if(corejs.isfunuri(cache) == false) {
         msg.reply("``" + cache + "`` already is not Fun Uri!")
         return
@@ -306,7 +306,7 @@ function delFunUri(msg) {
 
 function setnsfwch(msg) {
     msg.delete()
-    cache = msg.content.substring(8)
+    cache = corejs.cleanCommand(msg.content.substring(8))
     cache = corejs.getBoolValue(cache)
     if(cache == "invalid") {
         msg.reply("You have entered an invalid value!")
