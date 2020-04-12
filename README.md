@@ -14,6 +14,7 @@ Apollo dicord bot, for everyone.
 + Public commands for everyone
 + Invitation link protection
 + Banned word protection
++ Nsfw channel managements
 + Apollo FunUri
 
 Please refer to the documentation for details.
