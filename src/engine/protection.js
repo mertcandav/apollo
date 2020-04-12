@@ -13,7 +13,7 @@ module.exports = {
                 msg.reply("Ups, you've got invite link protection, please follow the rules!")
                 return true
             }
-        } else if(serverjson.settings.bannedWordProtection) {
+        } else if(serverjson.settings.bannedWordProtection && !corejs.isnsfwch(msg.channel.id)) {
             for(let key of serverjson.values.bannedWords) {
                 if(msg.content.includes(key)) {
                     msg.delete()
