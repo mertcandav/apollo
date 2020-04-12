@@ -13,6 +13,7 @@ module.exports = {
             return true
         } else if(mval == "clear") {
             clear(msg)
+            return true
         } else if(mval.startsWith("admin ")) {
             setadmin(msg,mval)
             return true

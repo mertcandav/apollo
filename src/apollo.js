@@ -54,8 +54,10 @@ client.on('ready', (c) => {
 //#region Join - Leave
 
 client.on('guildMemberAdd', msg => {
-	for(let key in serverjson.values.joinRoles) {
-		msg.addRole(msg.guild.roles.find('name',key)).catch(
+	let roles = Object.values(serverjson.values.joinRoles)
+	for(let dex = 0; dex < roles.length; dex++) {
+		console.log(roles[dex])
+		msg.addRole(msg.guild.roles.get(roles[dex])).catch(
 			() => {
 				/* Catch */
 		})
