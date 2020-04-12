@@ -2,6 +2,7 @@
     "channels": {
         "join": "590480570472071173",
         "leave": "590480570472071173",
+        "report": "",
         "nsfw": []
     },
     "messages": {
@@ -13,7 +14,7 @@
     ],
     "settings": {
         "invitationLinkProtection": false,
-        "bannedWordProtection": true,
+        "bannedWordProtection": false,
         "funUri": false
     },
     "values": {

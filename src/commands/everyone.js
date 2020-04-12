@@ -34,9 +34,32 @@ module.exports = {
                         corejs.random(serverjson.values.funUris.length-1)
                     ])
                 } else {
-                    msg.reply("Sorry, but no Fun Uri. Apply to admins to add one now!");
+                    msg.reply("Sorry, but no Fun Uri. Apply to admins to add one now!")
                 }
             }
+            return true
+        } else if(mval == "reportch") {
+            msg.delete()
+            msg.reply(
+                serverjson.channels.report != "" ?
+                    "Report channel is <#" + serverjson.channels.report + ">" :
+                    "Ups! No report channels are set!"
+                    )
+            return true
+        } else if(mval.startsWith("report ")) {
+            if(serverjson.channels.report != "") {
+                msg.delete()
+                msg.guild.channels.get(
+                    serverjson.channels.report
+                ).send("Reportted by <@!" + msg.member.id + ">\n----------\n" + msg.content.substring(8))
+            }
+
+            msg.reply(
+                serverjson.channels.report != "" ?
+                "Your report has been received, thanks!" :
+                "Ups! No report channels are set!"
+            )
+
             return true
         }
         

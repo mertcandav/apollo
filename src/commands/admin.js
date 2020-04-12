@@ -85,7 +85,7 @@ module.exports = {
                 serverjson.settings.funUri ? "Enable!" : "Disable!"))
             return true
         } else if(mval.startsWith("funuri ")) {
-            setFunUri(msg,mval)
+            setFunUri(msg)
             return true
         } else if(mval == "nsfwch") {
             msg.delete()
@@ -97,6 +97,9 @@ module.exports = {
             return true
         } else if(mval.startsWith("voting ")) {
             voting(msg)
+            return true
+        } else if(mval.startsWith("reportch ")) {
+            setreportch(msg)
             return true
         }
         
@@ -264,7 +267,7 @@ function bannedwords(msg) {
     msg.reply(val)
 }
 
-function setFunUri(msg,mval) {
+function setFunUri(msg) {
     msg.delete()
     cache = msg.content.substring(7).trimLeft().trimRight()
     cache = corejs.getBoolValue(cache)
@@ -441,4 +444,27 @@ function voting(msg) {
                 message.react("🔟")
             }
     }).catch(() => {})
+}
+
+function setreportch(msg) {
+    msg.delete()
+    cache = msg.content.substring(9).trimLeft().trimRight()
+    if(cache == "remove") {
+        if(serverjson.channels.report == "") {
+            msg.reply("Already is not exists report channel!")
+            return
+        }
+        serverjson.channels.report = ""
+        corejs.saveJSON("./jsonbase/server.json",serverjson)
+        msg.reply("Removed report channel!")
+        return                
+    }
+    cache = cache.substring(2,cache.length-1)
+    if(serverjson.channels.report == cache) {
+        msg.reply("<#" + cache + "> already is report channel!")
+        return
+    }
+    serverjson.channels.report = cache
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
+    msg.reply("<#" + cache + "> is setted report channel!")
 }

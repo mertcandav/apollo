@@ -1,5 +1,3 @@
-'use strict';
-
 const TextChannel = require('./TextChannel');
 
 /**
@@ -7,11 +5,19 @@ const TextChannel = require('./TextChannel');
  * @extends {TextChannel}
  */
 class NewsChannel extends TextChannel {
-  _patch(data) {
-    super._patch(data);
+  constructor(guild, data) {
+    super(guild, data);
+    this.type = 'news';
+  }
 
-    // News channels don't have a rate limit per user, remove it
-    this.rateLimitPerUser = undefined;
+  setup(data) {
+    super.setup(data);
+
+    /**
+     * The ratelimit per user for this channel (always 0)
+     * @type {number}
+     */
+    this.rateLimitPerUser = 0;
   }
 }
 
