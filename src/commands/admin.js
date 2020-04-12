@@ -60,15 +60,15 @@ module.exports = {
             cache = mval.substring(13)
             msg.reply("``" + cache + "`` is " + (corejs.isbannedword(cache) ? "banned word!" : "not banned word!"))
             return true
-        } else if (mval == "bannedwordprotection") {
+        } else if(mval == "bannedwordprotection") {
             msg.delete()
             msg.reply("Banned Word Protection is " + (
                 serverjson.settings.bannedWordProtection ? "Enable" : "Disable"))
             return true
-        } else if (mval.startsWith("bannedwordprotection ")) {
+        } else if(mval.startsWith("bannedwordprotection ")) {
             setbannedWordProtection(msg,mval)
             return true
-        }  else if(mval.startsWith("addfunuri ")) {
+        } else if(mval.startsWith("addfunuri ")) {
             addFunUri(msg)
             return true
         } else if(mval.startsWith("delfunuri ")) {
@@ -79,21 +79,24 @@ module.exports = {
             cache = msg.content.substring(10)
             msg.reply("``" + cache + "`` is " + (corejs.isfunuri(cache) ? "Fun Uri!" : "not Fun Uri!"))
             return true
-        } else if (mval == "funuri") {
+        } else if(mval == "funuri") {
             msg.delete()
             msg.reply("Fun Uri is " + (
                 serverjson.settings.funUri ? "Enable!" : "Disable!"))
             return true
-        } else if (mval.startsWith("funuri ")) {
+        } else if(mval.startsWith("funuri ")) {
             setFunUri(msg,mval)
             return true
-        } else if (mval == "nsfwch") {
+        } else if(mval == "nsfwch") {
             msg.delete()
             msg.reply("<#" + msg.channel.id + "> is " + (
                 corejs.isnsfwch(msg.channel.id) ? "Nsfw channel!" : "not Nsfw channel!"))
             return true
-        } else if (mval.startsWith("nsfwch ")) {
+        } else if(mval.startsWith("nsfwch ")) {
             setnsfwch(msg,mval)
+            return true
+        } else if(mval.startsWith("voting ")) {
+            voting(msg)
             return true
         }
         
@@ -263,7 +266,7 @@ function bannedwords(msg) {
 
 function setFunUri(msg,mval) {
     msg.delete()
-    cache = mval.substring(7)
+    cache = msg.content.substring(7).trimLeft().trimRight()
     cache = corejs.getBoolValue(cache)
     if(cache == "invalid") {
         msg.reply("You have entered an invalid value!")
@@ -282,7 +285,7 @@ function setFunUri(msg,mval) {
 
 function addFunUri(msg) {
     msg.delete()
-    cache = corejs.cleanCommand(msg.content.substring(11))
+    cache = msg.content.substring(11).trimLeft().trimRight()
     if(corejs.isfunuri(cache) == true) {
         msg.reply("``" + cache + "`` already is Fun Uri!")
         return
@@ -294,7 +297,7 @@ function addFunUri(msg) {
 
 function delFunUri(msg) {
     msg.delete()
-    cache = corejs.cleanCommand(msg.content.substring(11))
+    cache = msg.content.substring(11).trimLeft().trimRight()
     if(corejs.isfunuri(cache) == false) {
         msg.reply("``" + cache + "`` already is not Fun Uri!")
         return
@@ -324,4 +327,118 @@ function setnsfwch(msg) {
         delete serverjson.channels.nsfw.pop(msg.channel.id)
     corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply("<#" + msg.channel.id + "> is setted " + (cache ? "Nsfw channel!" : "not Nsfw channel!"))
+}
+
+function voting(msg) {
+    msg.delete()
+    let content = msg.content.substring(7).trimLeft()
+    let args = corejs.getParams(content)
+    if(args.length < 1) {
+        msg.reply("At least the title of the vote must be specified!")
+        return
+    } else if(args.length > 11) {
+        msg.reply("A maximum of 10 options can be placed!")
+        return
+    }
+    
+    if(args.length == 1) {
+        msg.channel.send("@everyone\n**" + args[0] + "**\n:green_square: Yes         :red_square: No").then(
+            (message) => {
+                message.react("🟩"),
+                message.react("🟥")
+        }).catch(() => {})
+        return
+    } else if(args.length == 2) {
+        msg.reply("At least two options must be specified in the voting or not at all!")
+        return
+    }
+
+    let dex = 0
+    let val = "@everyone\n"
+    for(; dex < args.length; dex++) {
+        let item = args[dex]
+        if(item == "") {
+            msg.reply("The argument cannot be empty!")
+            return
+        }
+        val += dex == 0 ?
+            "**" + item + "**\n" :
+            (dex == 1 ? ":one: " + item + "\n" :
+                dex == 2 ? ":two: " + item + "\n" :
+                    dex == 3 ? ":three: " +item + "\n" :
+                        dex == 4 ? ":four: " + item + "\n" :
+                            dex == 5 ? ":five: " + item + "\n" :
+                                dex == 6 ? ":six: " + item + "\n" :
+                                    dex == 7 ? ":seven: " + item + "\n" :
+                                        dex == 8 ? ":eight: " + item + "\n" :
+                                            dex == 9 ? ":nine: " + item + "\n" :
+                                            ":keycap_ten: " + item + "\n")
+    }
+    msg.channel.send(val).then(
+        (message) => {
+            if(args.length == 3) {
+                message.react("1️⃣")
+                message.react("2️⃣")
+            } else if(args.length == 4) {
+                message.react("1️⃣")
+                message.react("2️⃣")
+                message.react("3️⃣")
+            } else if(args.length == 5) {
+                message.react("1️⃣")
+                message.react("2️⃣")
+                message.react("3️⃣")
+                message.react("4️⃣")
+            } else if(args.length == 6) {
+                message.react("1️⃣")
+                message.react("2️⃣")
+                message.react("3️⃣")
+                message.react("4️⃣")
+                message.react("5️⃣")
+            } else if(args.length == 7) {
+                message.react("1️⃣")
+                message.react("2️⃣")
+                message.react("3️⃣")
+                message.react("4️⃣")
+                message.react("5️⃣")
+                message.react("6️⃣")
+            } else if(args.length == 8) {
+                message.react("1️⃣")
+                message.react("2️⃣")
+                message.react("3️⃣")
+                message.react("4️⃣")
+                message.react("5️⃣")
+                message.react("6️⃣")
+                message.react("7️⃣")
+            } else if(args.length == 9) {
+                message.react("1️⃣")
+                message.react("2️⃣")
+                message.react("3️⃣")
+                message.react("4️⃣")
+                message.react("5️⃣")
+                message.react("6️⃣")
+                message.react("7️⃣")
+                message.react("8️⃣")
+            } else if(args.length == 10) {
+                message.react("1️⃣")
+                message.react("2️⃣")
+                message.react("3️⃣")
+                message.react("4️⃣")
+                message.react("5️⃣")
+                message.react("6️⃣")
+                message.react("7️⃣")
+                message.react("8️⃣")
+                message.react("9️⃣")
+            } else {
+                message.react("1️⃣")
+                message.react("2️⃣")
+                message.react("3️⃣")
+                message.react("4️⃣")
+                message.react("5️⃣")
+                message.react("6️⃣")
+                message.react("7️⃣")
+                message.react("8️⃣")
+                message.react("9️⃣")
+                message.react("🔟")
+            }
+    }).catch(() => {})
 }

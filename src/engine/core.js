@@ -39,5 +39,12 @@ module.exports = {
     },
     isnsfwch: function(val) {
         return serverjson.channels.nsfw.indexOf(val) != -1
+    },
+    getParams: function(val) {
+        let array = val.split(',')
+        for(let dex = 0; dex < array.length; dex++) {
+            array[dex] = array[dex].trimLeft().trimRight()
+        }
+        return array
     }
 }
