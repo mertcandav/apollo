@@ -13,13 +13,14 @@ module.exports = {
             return true
         } else if(mval == "clear") {
             clear(msg)
-        } else if(mval.startsWith("setadmin ")) {
+        } else if(mval.startsWith("admin ")) {
             setadmin(msg,mval)
             return true
         } else if(mval.startsWith("unadmin ")) {
             unadmin(msg,mval)
             return true
         } else if(mval.startsWith("isadmin ")) {
+            msg.delete()
             cache = mval.substring(11)
             cache = cache.substring(0,cache.length-1)
             msg.reply("<@!" + cache + "> is " + (corejs.isadmin(cache) ? "admin!" : "not admin!"))
@@ -140,6 +141,7 @@ module.exports = {
             unjoinrole(msg,mval)
             return true
         } else if(mval.startsWith("isjoinrole ")) {
+            msg.delete()
             cache = mval.substring(14)
             cache = cache.substring(0,cache.length-1)
             msg.reply("<@&" + cache + "> is " + (corejs.isjoinrole(cache) ? "join role!" : "not join role!"))
@@ -310,7 +312,7 @@ function setleavemsg(msg,mval) {
 
 function setadmin(msg,mval) {
     msg.delete()
-    cache = mval.substring(12)
+    cache = mval.substring(9)
     cache = cache.substring(0,cache.length-1)
     if(corejs.isadmin(cache) == true) {
         msg.reply("<@!" + cache + "> already is admin!")
