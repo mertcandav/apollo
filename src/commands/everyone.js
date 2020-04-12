@@ -17,7 +17,10 @@ module.exports = {
             msg.delete()
             msg.reply("GitHub repostory link of apollo;\n" + botjson.info.gituri)
             return true
-        } else if(mval == "random") {
+        } else if(mval == "ping") {
+            msg.reply("Rock!")
+            return true
+        }else if(mval == "random") {
             msg.delete()
             msg.reply(corejs.random(100))
             return true
