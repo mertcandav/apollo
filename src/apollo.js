@@ -53,16 +53,18 @@ client.on('ready', (c) => {
 
 //#region Join - Leave
 
-client.on('guildMemberAdd', msg =>
-{
-  msg.guild.channels.get(serverjson.channels.join).send("<@" + msg.user.id + ">" + serverjson.messages.join)
-  return
+client.on('guildMemberAdd', msg => {
+	if(serverjson.channels.join != "") {
+  		msg.guild.channels.get(serverjson.channels.join).send("<@" + msg.user.id + ">" + serverjson.messages.join)
+	  return
+	}
 })
 
-client.on('guildMemberRemove', msg =>
-{
-  msg.guild.channels.get(serverjson.channels.leave).send("<@" + msg.user.id + ">" + serverjson.messages.leave)
-  return
+client.on('guildMemberRemove', msg => {
+	if(serverjson.channels.join != "") {
+  		msg.guild.channels.get(serverjson.channels.leave).send("<@" + msg.user.id + ">" + serverjson.messages.leave)
+	  	return
+	}
 })
 
 //#endregion

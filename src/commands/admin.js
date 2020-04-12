@@ -35,16 +35,16 @@ module.exports = {
             cache = mval.substring(6)
             msg.channel.send(cache)
             return true
-        } else if (mval.startsWith("setjoinch ")) {
-            setjoinch(msg,mval)
+        } else if (mval.startsWith("joinch ")) {
+            setjoinch(msg)
             return true
-        } else if (mval.startsWith("setleavech ")) {
-            setleavech(msg,mval)
+        } else if (mval.startsWith("leavech ")) {
+            setleavech(msg)
             return true
-        } else if (mval.startsWith("setjoinmsg ")) {
+        } else if (mval.startsWith("joinmsg ")) {
             setjoinmsg(msg,mval)
             return true
-        } else if (mval.startsWith("setleavemsg ")) {
+        } else if (mval.startsWith("leavemsg ")) {
             setleavemsg(msg,mval)
             return true
         } else if (mval == "invitationlinkprotection") {
@@ -203,10 +203,20 @@ function setbannedWordProtection(msg,mval) {
     msg.reply("Banned Word Protection is setted " + (cache ? "enable!" : "disable"))
 }
 
-function setjoinch(msg,mval) {
+function setjoinch(msg) {
     msg.delete()
-    cache = mval.substring(12)
-    cache = cache.substring(0,cache.length-1)
+    cache = msg.content.substring(7).trimLeft().trimRight()
+    if(cache == "remove") {
+        if(serverjson.channels.join == "") {
+            msg.reply("Already is not exists join channel!")
+            return
+        }
+        serverjson.channels.join = ""
+        corejs.saveJSON("./jsonbase/server.json",serverjson)
+        msg.reply("Removed join channel!")
+        return                
+    }
+    cache = cache.substring(2,cache.length-1)
     if(serverjson.channels.join === cache) {
         msg.reply("<#" + cache + "> is already set as join cahannel!")
         return 
@@ -216,10 +226,20 @@ function setjoinch(msg,mval) {
     msg.reply("<#" + cache + "> setted join channel!")
 }
 
-function setleavech(msg,mval) {
+function setleavech(msg) {
     msg.delete()
-    cache = mval.substring(13)
-    cache = cache.substring(0,cache.length-1)
+    cache = msg.content.substring(9).trimLeft().trimRight()
+    if(cache == "remove") {
+        if(serverjson.channels.leave == "") {
+            msg.reply("Already is not exists leave channel!")
+            return
+        }
+        serverjson.channels.leave = ""
+        corejs.saveJSON("./jsonbase/server.json",serverjson)
+        msg.reply("Removed leave channel!")
+        return                
+    }
+    cache = cache.substring(2,cache.length-1)
     if(serverjson.channels.leave === cache) {
         msg.reply("<#" + cache + "> is already set as leave cahannel!")
         return 
@@ -231,7 +251,7 @@ function setleavech(msg,mval) {
 
 function setjoinmsg(msg,mval) {
     msg.delete()
-    cache = mval.substring(11)
+    cache = mval.substring(8)
     if(serverjson.messages.join === cache) {
         msg.reply("'" + cache + "' is already set as join message!")
         return 
@@ -243,7 +263,7 @@ function setjoinmsg(msg,mval) {
 
 function setleavemsg(msg,mval) {
     msg.delete()
-    cache = mval.substring(12)
+    cache = mval.substring(9)
     if(serverjson.messages.leave === cache) {
         msg.reply("'" + cache + "' is already set as leave message!")
         return 
