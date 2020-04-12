@@ -11,6 +11,8 @@ module.exports = {
         if(mval == "admins") {
             admins(msg)
             return true
+        } else if(mval == "clear") {
+            clear(msg)
         } else if(mval.startsWith("setadmin ")) {
             setadmin(msg,mval)
             return true
@@ -154,6 +156,13 @@ function ban(msg) {
     } else {
         msg.reply("You didn't mention the user to ban!")
     }
+}
+
+function clear(msg) {
+    msg.delete()
+    msg.channel.fetchMessages().then(msgs => {
+        msg.channel.bulkDelete(msgs)
+    })
 }
 
 function setInvitationLinkProtection(msg,mval) {
