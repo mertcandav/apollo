@@ -82,10 +82,18 @@ module.exports = {
         } else if (mval == "funuri") {
             msg.delete()
             msg.reply("Fun Uri is " + (
-                serverjson.settings.funUri ? "Enable" : "Disable"))
+                serverjson.settings.funUri ? "Enable!" : "Disable!"))
             return true
         } else if (mval.startsWith("funuri ")) {
             setFunUri(msg,mval)
+            return true
+        } else if (mval == "nsfwch") {
+            msg.delete()
+            msg.reply("<#" + msg.channel.id + "> is " + (
+                corejs.isnsfwch(msg.channel.id) ? "Nsfw channel!" : "not Nsfw channel!"))
+            return true
+        } else if (mval.startsWith("nsfwch ")) {
+            setnsfwch(msg,mval)
             return true
         }
         
@@ -127,7 +135,7 @@ function setbannedWordProtection(msg,mval) {
         return 
     }
     serverjson.settings.bannedWordProtection = cache
-    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply("Banned Word Protection is setted " + (cache ? "enable!" : "disable"))
 }
 
@@ -136,11 +144,11 @@ function setjoinch(msg,mval) {
     cache = mval.substring(12)
     cache = cache.substring(0,cache.length-1)
     if(serverjson.channels.join === cache) {
-        msg.reply("<#" + cache + "> is already set as join cahannel!");
+        msg.reply("<#" + cache + "> is already set as join cahannel!")
         return 
     }
     serverjson.channels.join = cache
-    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply("<#" + cache + "> setted join channel!")
 }
 
@@ -149,11 +157,11 @@ function setleavech(msg,mval) {
     cache = mval.substring(13)
     cache = cache.substring(0,cache.length-1)
     if(serverjson.channels.leave === cache) {
-        msg.reply("<#" + cache + "> is already set as leave cahannel!");
+        msg.reply("<#" + cache + "> is already set as leave cahannel!")
         return 
     }
     serverjson.channels.leave = cache
-    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply("<#" + cache + "> setted leave channel!")
 }
 
@@ -161,11 +169,11 @@ function setjoinmsg(msg,mval) {
     msg.delete()
     cache = mval.substring(11)
     if(serverjson.messages.join === cache) {
-        msg.reply("'" + cache + "' is already set as join message!");
+        msg.reply("'" + cache + "' is already set as join message!")
         return 
     }
     serverjson.messages.join = cache
-    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply("'" + cache + "' setted join message!")
 }
 
@@ -173,11 +181,11 @@ function setleavemsg(msg,mval) {
     msg.delete()
     cache = mval.substring(12)
     if(serverjson.messages.leave === cache) {
-        msg.reply("'" + cache + "' is already set as leave message!");
+        msg.reply("'" + cache + "' is already set as leave message!")
         return 
     }
     serverjson.messages.leave = cache
-    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply("'" + cache + "' setted leave message!")
 }
 
@@ -190,7 +198,7 @@ function setadmin(msg,mval) {
         return
     }
     serverjson.admins.push(cache)
-    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply("<@!" + cache + "> setted admin!")
 }
 
@@ -203,7 +211,7 @@ function unadmin(msg,mval) {
         return
     }
     delete serverjson.admins.pop(cache)
-    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply("<@!" + cache + "> removed from admins!")
 }
 
@@ -223,7 +231,7 @@ function banword(msg,mval) {
         return
     }
     serverjson.values.bannedWords.push(cache)
-    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply("``" + cache + "` added to banned words!")
 }
 
@@ -235,7 +243,7 @@ function unbanword(msg,mval) {
         return
     }
     delete serverjson.values.bannedWords.pop(cache)
-    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply("``" + cache + "`` removed from banned words!")
 }
 
@@ -268,7 +276,7 @@ function setFunUri(msg,mval) {
         return 
     }
     serverjson.settings.funUri = cache
-    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply("Fun Uri feature is setted " + (cache ? "enable!" : "disable"))
 }
 
@@ -280,8 +288,8 @@ function addFunUri(msg) {
         return
     }
     serverjson.values.funUris.push(cache)
-    corejs.saveJSON("./jsonbase/server.json",serverjson);
-    msg.reply("``" + cache + "` added to Fun Uri!")
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
+    msg.reply("``" + cache + "`` added to Fun Uri!")
 }
 
 function delFunUri(msg) {
@@ -292,6 +300,28 @@ function delFunUri(msg) {
         return
     }
     delete serverjson.values.funUris.pop(cache)
-    corejs.saveJSON("./jsonbase/server.json",serverjson);
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply("``" + cache + "`` removed from Fun Uris!")
+}
+
+function setnsfwch(msg) {
+    msg.delete()
+    cache = msg.content.substring(8)
+    cache = corejs.getBoolValue(cache)
+    if(cache == "invalid") {
+        msg.reply("You have entered an invalid value!")
+        return
+    } else if(cache == true && corejs.isnsfwch(msg.channel.id) == true) {
+        msg.reply("<#" + msg.channel.id + "> already is Nsfw channel!")
+        return
+    } else if(cache == false && corejs.isnsfwch(msg.channel.id) == false) {
+        msg.reply("<#" + msg.channel.id + "> already is not Nsfw channel!")
+        return
+    }
+    if(cache == true)
+        serverjson.channels.nsfw.push(msg.channel.id)
+    else
+        delete serverjson.channels.nsfw.pop(msg.channel.id)
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
+    msg.reply("<#" + msg.channel.id + "> is setted " + (cache ? "Nsfw channel!" : "not Nsfw channel!"))
 }

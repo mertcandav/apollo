@@ -36,5 +36,8 @@ module.exports = {
     },
     isfunuri: function(val) {
         return serverjson.values.funUris.indexOf(val) != -1
-    }   
+    },
+    isnsfwch: function(val) {
+        return serverjson.channels.nsfw.indexOf(val) != -1
+    }
 }

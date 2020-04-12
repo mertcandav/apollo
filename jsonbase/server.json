@@ -1,7 +1,8 @@
 {
     "channels": {
         "join": "590480570472071173",
-        "leave": "590480570472071173"
+        "leave": "590480570472071173",
+        "nsfw": []
     },
     "messages": {
         "join": " YO! Is now here!",
