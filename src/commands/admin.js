@@ -22,6 +22,12 @@ module.exports = {
             cache = cache.substring(0,cache.length-1)
             msg.reply("<@!" + cache + "> is " + (corejs.isadmin(cache) ? "admin!" : "not admin!"))
             return true
+        } else if(mval.startsWith("kick ")) {
+            kick(msg)
+            return true
+        } else if(mval.startsWith("ban ")) {
+            ban(msg)
+            return true
         } else if (mval.startsWith("write ")) {
             msg.delete()
             cache = mval.substring(6)
@@ -104,6 +110,49 @@ module.exports = {
         }
         
         return false
+    }
+}
+
+function kick(msg) {
+    msg.delete()
+    const user = msg.mentions.users.first()
+    if (user) {
+        const member = msg.guild.member(user)
+        if (member) {
+            member
+                .kick()
+                .then(() => {
+                    msg.reply(`Successfully kicked ${user.tag}!`)
+                }).catch(() => {
+                    msg.reply("I was unable to kick the member!")
+                })
+        } else {
+            msg.reply("That user isn't in this guild!")
+        }
+    } else {
+        msg.reply("You didn't mention the user to kick!")
+    }
+}
+
+function ban(msg) {
+    msg.delete()
+    const user = msg.mentions.users.first()
+    if (user) {
+        const member = msg.guild.member(user)
+        if (member) {
+            member
+            .ban({
+            reason: 'They were bad!',
+            }).then(() => {
+                msg.reply(`Successfully banned ${user.tag}!`)
+            }).catch(() => {
+                msg.reply('I was unable to ban the member!')
+            })
+        } else {
+            msg.reply("That user isn't in this guild!")
+        }
+    } else {
+        msg.reply("You didn't mention the user to ban!")
     }
 }
 
