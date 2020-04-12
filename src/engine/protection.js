@@ -15,7 +15,7 @@ module.exports = {
             }
         } else if(serverjson.settings.bannedWordProtection && !corejs.isnsfwch(msg.channel.id)) {
             for(let key of serverjson.values.bannedWords) {
-                if(msg.content.includes(key)) {
+                if(msg.content.toLowerCase().includes(key)) {
                     msg.delete()
                     msg.reply("Ups, you've got banned word protection, please follow the rules!")
                     return true
