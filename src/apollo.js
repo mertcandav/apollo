@@ -26,6 +26,7 @@ const discordjs = require("discord.js")
 const adminjs = require("./commands/admin.js")
 const protectionjs = require("./engine/protection.js")
 const corejs = require("./engine/core.js")
+const sys_apolloTrade = require("./systems/apolloTrade.ts")
 const everyonejs = require("./commands/everyone.js")
 const serverjson = require("../jsonbase/server.json")
 const specialjson = require("../jsonbase/special.json")
@@ -87,6 +88,8 @@ client.on("message", msg => {
 	if(serverjson.admins.indexOf(msg.member.id) != -1 && adminjs.process(client,msg)) {
 		return
 	} else if(everyonejs.process(msg)) {
+		return
+	} else if(sys_apolloTrade.process(msg)) {
 		return
 	} else {
 		msg.reply("Hmm, this command is not defined!")

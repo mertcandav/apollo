@@ -41,6 +41,11 @@ module.exports = {
         } else if(mval.startsWith("report ")) {
             report(msg)
             return true
+        } else if(mval == "apollotradech") {
+            msg.delete()
+            msg.reply("Apollo Trade channel is " + (
+                serverjson.channels.trade != "" ? "<#" + serverjson.channels.trade + ">" : "not setted!"))
+            return true
         }
         
         return false

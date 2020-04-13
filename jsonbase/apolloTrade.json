@@ -1,0 +1,18 @@
+{
+    "shop": {
+        "Apollo Supporter": {
+            "amount": 100,
+            "stock": 100000000
+        }
+    },
+    "members": {
+        "294149228358402049": {
+            "coin": 0,
+            "inventory": {
+                "Apollo Supporter": {
+                    "count": 1
+                }
+            }
+        }
+    }
+}

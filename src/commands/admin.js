@@ -165,6 +165,9 @@ module.exports = {
         } else if(mval.startsWith("setactivity ")) {
             setactivity(client,msg)
             return true
+        } else if(mval.startsWith("apollotradech ")) {
+            setapollotradech(msg,mval)
+            return true
         }
         
         return false
@@ -751,4 +754,27 @@ function setactivity(client,msg) {
     corejs.saveJSON("./jsonbase/bot.json",botjson)
     client.user.setActivity(parts[0],{ type: parts[1] })
     msg.reply("Activity updated!")
+}
+
+function setapollotradech(msg) {
+    msg.delete()
+    cache = msg.content.substring(14).trimLeft().trimRight()
+    if(cache == "remove") {
+        if(serverjson.channels.trade == "") {
+            msg.reply("Already is not exists Apollo Trade channel!")
+            return
+        }
+        serverjson.channels.trade = ""
+        corejs.saveJSON("./jsonbase/server.json",serverjson)
+        msg.reply("Removed Apollo Trade channel!")
+        return                
+    }
+    cache = cache.substring(2,cache.length-1)
+    if(serverjson.channels.trade == cache) {
+        msg.reply("<#" + cache + "> already is Apollo Trade channel!")
+        return
+    }
+    serverjson.channels.trade = cache
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
+    msg.reply("<#" + cache + "> is setted Apollo Trade channel!")
 }
