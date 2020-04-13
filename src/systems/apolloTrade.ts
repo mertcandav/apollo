@@ -9,10 +9,10 @@ const apolloTradejson = require("../../jsonbase/apolloTrade.json")
 
 module.exports = {
     process: function(msg) {
-        if(serverjson.settings.apolloTrade == false) {
+        if(serverjson.channels.trade == "") {
             return false
         }
-        let dex = corejs.findIndexJSONKey(msg.id,apolloTradejson.members)
+        let dex = corejs.findIndexJSONKey(msg.member.id,apolloTradejson.members)
         if(dex == -1) {
             return false
         }
@@ -20,7 +20,7 @@ module.exports = {
         let mval = corejs.cleanCommand(msg.content)
         if(mval == "balance") {
             msg.delete()
-            msg.reply("Your balance: " + member.coin)
+            msg.reply("Your Apollo Coins: " + member.coin)
             return true
         }
         return false
