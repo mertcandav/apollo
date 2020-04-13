@@ -244,7 +244,7 @@ function mute(msg) {
                             msg.channel.send(`<@!${member.id}> You can talk now!`)
                         }
                     } else {
-                        msg.channel.send("Silenced temporarily but muterole has been deleted, so I can't remove it! Expired, admins please lift banning!")
+                        msg.channel.send(`<@!${member.id}> is silenced temporarily but muterole has been deleted, so I can't remove it! Expired, admins please lift banning!`)
                     }
                 },parts[2] * 60000)
             }
