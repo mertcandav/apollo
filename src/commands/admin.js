@@ -155,7 +155,6 @@ module.exports = {
             return true
         } else if(mval == "muterole") {
             msg.delete()
-            msg.delete()
             msg.reply("Mute role is " + (
                 serverjson.values.muteRole != "" ? "<@&" + serverjson.values.muteRole + ">" : "not setted!"))
             return true
@@ -221,11 +220,24 @@ function mute(msg) {
         const member = msg.guild.member(user)
         if (member) {
             if(member.roles.get(serverjson.values.muteRole) != null) {
-                msg.reply(`${user.tag} is already muted!`)
+                msg.reply(`<@!${member.id}> is already muted!`)
                 return
             }
+            let parts = msg.content.split(' ')
+            if(parts.length == 3) {
+                if(serverjson.values.muteRole != "") {
+                    setTimeout(() => {
+                        member.removeRole(serverjson.values.muteRole)
+                        msg.channel.send(`<@!${member.id}> You can talk now!`)
+                    },parts[2] * 60000)
+                } else {
+                    msg.channel.send("Silenced temporarily but muterole has been deleted, so I can't remove it! Expired, admins please lift banning!")
+                }
+            }
             member.addRole(serverjson.values.muteRole)
-            msg.reply(`Successfully muted @${user.tag}!`)
+            msg.reply(parts.length == 3 ?
+                    `<@!${member.id}> muted for ${parts[2]} minutes!` :
+                    `<@!${member.id}> is muted!`)
         } else {
             msg.reply("That user isn't in this guild!")
         }
