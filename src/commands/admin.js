@@ -237,14 +237,16 @@ function mute(msg) {
                     msg.reply("The maximum number can be at least 1!")
                     return
                 }
-                if(serverjson.values.muteRole != "") {
-                    setTimeout(() => {
-                        member.removeRole(serverjson.values.muteRole)
-                        msg.channel.send(`<@!${member.id}> You can talk now!`)
-                    },parts[2] * 60000)
-                } else {
-                    msg.channel.send("Silenced temporarily but muterole has been deleted, so I can't remove it! Expired, admins please lift banning!")
-                }
+                setTimeout(() => {
+                    if(serverjson.values.muteRole != "") {
+                        if(member.roles.get(serverjson.values.muteRole) != null) {
+                            member.removeRole(serverjson.values.muteRole)
+                            msg.channel.send(`<@!${member.id}> You can talk now!`)
+                        }
+                    } else {
+                        msg.channel.send("Silenced temporarily but muterole has been deleted, so I can't remove it! Expired, admins please lift banning!")
+                    }
+                },parts[2] * 60000)
             }
             member.addRole(serverjson.values.muteRole)
             msg.reply(parts.length == 3 ?
