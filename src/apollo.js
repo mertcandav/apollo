@@ -56,7 +56,11 @@ client.on('ready', (msg) => {
 //#region Join - Leave
 
 client.on("guildMemberAdd", msg => {
-	
+	apolloTradejson.members[msg.id] = {
+			coin: 0,
+			inventory: {}
+	}
+	corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
 
 	let roles = Object.values(serverjson.values.joinRoles)
 	for(let dex = 0; dex < roles.length; dex++) {
@@ -66,9 +70,10 @@ client.on("guildMemberAdd", msg => {
 				/* Catch */
 		})
 	}
+
 	if(serverjson.channels.join != "") {
   		msg.guild.channels.get(serverjson.channels.join).send("<@" + msg.user.id + ">" + serverjson.messages.join)
-	  return
+	  	return
 	}
 })
 
