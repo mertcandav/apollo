@@ -176,7 +176,7 @@ function kick(msg) {
             member.kick({
                 reason: "Bad boy"
             }).then(() => {
-                    msg.reply(`Successfully kicked ${user.tag}!`)
+                    msg.reply(`<@!${member.id}> kicked!`)
                 }).catch(() => {
                     msg.reply("I was unable to kick the member!")
                 })
@@ -197,7 +197,7 @@ function ban(msg) {
             member.ban({
             reason: 'Bad boy!',
             }).then(() => {
-                msg.reply(`Successfully banned ${user.tag}!`)
+                msg.reply(`<@!${member.id}> banned!`)
             }).catch(() => {
                 msg.reply('I was unable to ban the member!')
             })
@@ -257,11 +257,11 @@ function unmute(msg) {
         const member = msg.guild.member(user)
         if (member) {
             if(member.roles.get(serverjson.values.muteRole) == null) {
-                msg.reply(`${user.tag} is already not muted!`)
+                msg.reply(`<@!${member.id}> is already not muted!`)
                 return
             }
             member.removeRole(serverjson.values.muteRole)
-            msg.reply(`Successfully unmuted @${user.tag}!`)
+            msg.reply(`<@!${member.id}> unmuted!`)
         } else {
             msg.reply("That user isn't in this guild!")
         }

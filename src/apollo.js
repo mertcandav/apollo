@@ -53,7 +53,7 @@ client.on('ready', (c) => {
 
 //#region Join - Leave
 
-client.on('guildMemberAdd', msg => {
+client.on("guildMemberAdd", msg => {
 	let roles = Object.values(serverjson.values.joinRoles)
 	for(let dex = 0; dex < roles.length; dex++) {
 		console.log(roles[dex])
@@ -68,7 +68,7 @@ client.on('guildMemberAdd', msg => {
 	}
 })
 
-client.on('guildMemberRemove', msg => {
+client.on("guildMemberRemove", msg => {
 	if(serverjson.channels.join != "") {
   		msg.guild.channels.get(serverjson.channels.leave).send("<@" + msg.user.id + ">" + serverjson.messages.leave)
 	  	return
