@@ -2,7 +2,7 @@
     "channels": {
         "join": "698990708220100750",
         "leave": "698990708220100750",
-        "report": "698990729107603554",
+        "report": "",
         "nsfw": []
     },
     "messages": {
@@ -20,6 +20,7 @@
     },
     "values": {
         "joinRoles": [],
+        "muteRole": "699179535249309708",
         "bannedWords": [
             "fuck",
             "shit",

@@ -32,6 +32,12 @@ module.exports = {
         } else if(mval.startsWith("ban ")) {
             ban(msg)
             return true
+        } else if(mval.startsWith("mute ")) {
+            mute(msg)
+            return true
+        } else if(mval.startsWith("unmute ")) {
+            unmute(msg)
+            return true
         } else if (mval.startsWith("write ")) {
             msg.delete()
             cache = mval.substring(6)
@@ -147,6 +153,15 @@ module.exports = {
             cache = cache.substring(0,cache.length-1)
             msg.reply("<@&" + cache + "> is " + (corejs.isjoinrole(cache) ? "join role!" : "not join role!"))
             return true
+        } else if(mval == "muterole") {
+            msg.delete()
+            msg.delete()
+            msg.reply("Mute role is " + (
+                serverjson.values.muteRole != "" ? "<@&" + serverjson.values.muteRole + ">" : "not setted!"))
+            return true
+        } else if(mval.startsWith("muterole ")) {
+            setmuterole(msg,mval)
+            return true
         }
         
         return false
@@ -159,9 +174,9 @@ function kick(msg) {
     if (user) {
         const member = msg.guild.member(user)
         if (member) {
-            member
-                .kick()
-                .then(() => {
+            member.kick({
+                reason: "Bad boy"
+            }).then(() => {
                     msg.reply(`Successfully kicked ${user.tag}!`)
                 }).catch(() => {
                     msg.reply("I was unable to kick the member!")
@@ -180,9 +195,8 @@ function ban(msg) {
     if (user) {
         const member = msg.guild.member(user)
         if (member) {
-            member
-            .ban({
-            reason: 'They were bad!',
+            member.ban({
+            reason: 'Bad boy!',
             }).then(() => {
                 msg.reply(`Successfully banned ${user.tag}!`)
             }).catch(() => {
@@ -193,6 +207,54 @@ function ban(msg) {
         }
     } else {
         msg.reply("You didn't mention the user to ban!")
+    }
+}
+
+function mute(msg) {
+    msg.delete()
+    if(serverjson.values.muteRole == "") {
+        msg.reply("Mute role is not setted!")
+        return
+    }
+    const user = msg.mentions.users.first()
+    if (user) {
+        const member = msg.guild.member(user)
+        if (member) {
+            if(member.roles.get(serverjson.values.muteRole) != null) {
+                msg.reply(`${user.tag} is already muted!`)
+                return
+            }
+            member.addRole(serverjson.values.muteRole)
+            msg.reply(`Successfully muted @${user.tag}!`)
+        } else {
+            msg.reply("That user isn't in this guild!")
+        }
+    } else {
+        msg.reply("You didn't mention the user to mute!")
+    }
+}
+
+function unmute(msg) {
+    msg.delete()
+    if(serverjson.values.muteRole == "") {
+        msg.reply("Mute role is not setted!")
+        return
+    }
+    const user = msg.mentions.users.first()
+    if (user) {
+        const member = msg.guild.member(user)
+        if (member) {
+            if(member.roles.get(serverjson.values.muteRole) == null) {
+                msg.reply(`${user.tag} is already not muted!`)
+                return
+            }
+            member.removeRole(serverjson.values.muteRole)
+            msg.reply(`Successfully unmuted @${user.tag}!`)
+        } else {
+            msg.reply("That user isn't in this guild!")
+        }
+    } else {
+        msg.reply("You didn't mention the user to unmute!")
     }
 }
 
@@ -609,4 +671,27 @@ function unjoinrole(msg,mval) {
     delete serverjson.values.joinRoles.pop(cache)
     corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply("<@&" + cache + "> removed from join roles!")
+}
+
+function setmuterole(msg) {
+    msg.delete()
+    cache = msg.content.substring(9).trimLeft().trimRight()
+    if(cache == "remove") {
+        if(serverjson.values.muteRole == "") {
+            msg.reply("Already is not exists mute role!")
+            return
+        }
+        serverjson.values.muteRole = ""
+        corejs.saveJSON("./jsonbase/server.json",serverjson)
+        msg.reply("Removed mute role!")
+        return                
+    }
+    cache = cache.substring(3,cache.length-1)
+    if(serverjson.values.muteRole == cache) {
+        msg.reply("<@&" + cache + "> already is mute role!")
+        return
+    }
+    serverjson.values.muteRole = cache
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
+    msg.reply("<@&" + cache + "> is setted mute role!")
 }

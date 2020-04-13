@@ -80,7 +80,7 @@ client.on('guildMemberRemove', msg => {
 client.on("message", msg => {
 	if(protectionjs.process(msg))
 		return
-		
+
 	if(!msg.content.startsWith(";"))
 		return
 
