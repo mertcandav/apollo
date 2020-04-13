@@ -81,7 +81,7 @@ client.on("message", msg => {
 	if(protectionjs.process(msg))
 		return
 
-	if(!msg.content.startsWith(";"))
+	if(!msg.content.startsWith(prefix))
 		return
 
 	if(serverjson.admins.indexOf(msg.member.id) != -1 && adminjs.process(msg)) {
