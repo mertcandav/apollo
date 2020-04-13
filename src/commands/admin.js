@@ -225,12 +225,16 @@ function mute(msg) {
             }
             let parts = msg.content.split(' ')
             if(parts.length == 3) {
+                if(isNaN(parts[2])) {
+                    msg.reply("Please enter only number!")
+                    return
+                }
                 if(parts[2] > 35791) {
                     msg.reply("You can mute up to 35791 minutes!")
                     return
                 }
-                if(isNaN(parts[2])) {
-                    msg.reply("Please enter only number!")
+                if(parts[2] < 1) {
+                    msg.reply("The maximum number can be at least 1!")
                     return
                 }
                 if(serverjson.values.muteRole != "") {
