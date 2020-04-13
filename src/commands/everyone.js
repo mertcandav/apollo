@@ -22,25 +22,13 @@ module.exports = {
             msg.reply("Rock!")
             return true
         }else if(mval == "random") {
-            msg.delete()
-            msg.reply(corejs.random(100))
+            random(msg,mval)
             return true
         } else if(mval.startsWith("random ")) {
-            msg.delete()
-            msg.reply(corejs.random(mval.substring(7)))
+            random(msg,mval)
             return true
         } else if(mval.startsWith("getfunuri")) {
-            if(serverjson.settings.funUri) {
-                msg.delete()
-                if(serverjson.values.funUris.length > 0) {
-                    msg.reply(Object.values(serverjson.values.funUris)
-                    [
-                        corejs.random(serverjson.values.funUris.length-1)
-                    ])
-                } else {
-                    msg.reply("Sorry, but no Fun Uri. Apply to admins to add one now!")
-                }
-            }
+            getfunuri(msg)
             return true
         } else if(mval == "reportch") {
             msg.delete()
@@ -51,22 +39,58 @@ module.exports = {
                     )
             return true
         } else if(mval.startsWith("report ")) {
-            if(serverjson.channels.report != "") {
-                msg.delete()
-                msg.guild.channels.get(
-                    serverjson.channels.report
-                ).send("Reportted by <@!" + msg.member.id + ">\n----------\n" + msg.content.substring(8))
-            }
-
-            msg.reply(
-                serverjson.channels.report != "" ?
-                "Your report has been received, thanks!" :
-                "Ups! No report channels are set!"
-            )
-
+            report(msg)
             return true
         }
         
         return false
     }
+}
+
+function random(msg,mval) {
+    msg.delete()
+    if(mval == "random") {
+        msg.reply(corejs.random(100))
+        return
+    }
+
+    let number = mval.substring(7)
+    if(isNaN(number)) {
+        msg.reply("Please enter only number!")
+        return true
+    }
+    if(number < 0) {
+        msg.reply("The maximum number can be at least 0!")
+        return true
+    }
+    msg.reply(corejs.random(number))
+}
+
+function getfunuri(msg) {
+    if(serverjson.settings.funUri) {
+        msg.delete()
+        if(serverjson.values.funUris.length > 0) {
+            msg.reply(Object.values(serverjson.values.funUris)
+            [
+                corejs.random(serverjson.values.funUris.length-1)
+            ])
+        } else {
+            msg.reply("Sorry, but no Fun Uri. Apply to admins to add one now!")
+        }
+    }
+}
+
+function report(msg) {
+    if(serverjson.channels.report != "") {
+        msg.delete()
+        msg.guild.channels.get(
+            serverjson.channels.report
+        ).send("Reportted by <@!" + msg.member.id + ">\n----------\n" + msg.content.substring(8))
+    }
+
+    msg.reply(
+        serverjson.channels.report != "" ?
+        "Your report has been received, thanks!" :
+        "Ups! No report channels are set!"
+    )
 }
