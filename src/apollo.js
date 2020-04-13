@@ -56,7 +56,7 @@ client.on('ready', (msg) => {
 //#region Join - Leave
 
 client.on("guildMemberAdd", msg => {
-	apolloTradejson.members[msg.id] = {
+	apolloTradejson.accounts[msg.id] = {
 			coin: 0,
 			inventory: {}
 	}
@@ -78,8 +78,8 @@ client.on("guildMemberAdd", msg => {
 })
 
 client.on("guildMemberRemove", msg => {
-	if(corejs.findIndexJSONKey(msg.id,apolloTradejson.members) != -1) {
-		delete apolloTradejson.members[msg.id]
+	if(corejs.findIndexJSONKey(msg.id,apolloTradejson.accounts) != -1) {
+		delete apolloTradejson.accounts[msg.id]
 		corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
 	}
 	if(serverjson.channels.join != "") {

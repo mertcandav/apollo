@@ -5,7 +5,7 @@
             "stock": 100000000
         }
     },
-    "members": {
+    "accounts": {
         "294149228358402049": {
             "coin": 0,
             "inventory": {
