@@ -41,7 +41,7 @@ module.exports = {
             return true
         } else if (mval.startsWith("write ")) {
             msg.delete()
-            cache = mval.substring(6)
+            cache = msg.content.substring(6)
             msg.channel.send(cache)
             return true
         } else if (mval == "joinch") {
