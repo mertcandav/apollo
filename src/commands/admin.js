@@ -1,12 +1,13 @@
 //#region require
 
 const serverjson = require("../../jsonbase/server.json")
+const botjson = require("../../jsonbase/bot.json")
 const corejs = require("../engine/core.js")
 
 //#endregion
 
 module.exports = {
-    process: function(msg) {
+    process: function(client,msg) {
         mval = corejs.cleanCommand(msg.content)
         if(mval == "admins") {
             admins(msg)
@@ -160,6 +161,9 @@ module.exports = {
             return true
         } else if(mval.startsWith("muterole ")) {
             setmuterole(msg,mval)
+            return true
+        } else if(mval.startsWith("setactivity ")) {
+            setactivity(client,msg)
             return true
         }
         
@@ -720,4 +724,31 @@ function setmuterole(msg) {
     serverjson.values.muteRole = cache
     corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply("<@&" + cache + "> is setted mute role!")
+}
+
+function setactivity(client,msg) {
+    msg.delete()
+    let parts = msg.content.substring(12).split(',')
+    if(parts.length < 2) {
+        msg.reply("There must be a minimum of 2 parameters!")
+        return
+    } else if(parts.length > 2) {
+        msg.reply("There must be a maximum of 2 parameters!")
+        return
+    }
+    parts[0] = parts[0].trimLeft().trimRight()
+    parts[1] = parts[1].trimLeft().toUpperCase()
+    if(
+        parts[1] != "PLAYING" &&
+        parts[1] != "WATCHING" &&
+        parts[1] != "LISTENING" &&
+        parts[1] != "STREAMING") {
+            msg.reply("The type of activity is not recognized!")
+            return
+    }
+    botjson.activity.status = parts[0]
+    botjson.activity.type = parts[1]
+    corejs.saveJSON("./jsonbase/bot.json",botjson)
+    client.user.setActivity(parts[0],{ type: parts[1] })
+    msg.reply("Activity updated!")
 }

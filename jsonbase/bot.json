@@ -1,5 +1,9 @@
 {
     "prefix": ";",
+    "activity": {
+        "status": "World from Moon",
+        "type": "WATCHING"
+    },
     "info": {
         "author": "Mertcan Davulcu",
         "authorgituri": "https://github.com/mertcandav",

@@ -44,8 +44,8 @@ const prefix = botjson.prefix
 
 client.login(specialjson.token)
 
-client.on('ready', (c) => {
-  client.user.setActivity("World from Moon", { type: "WATCHING" })
+client.on('ready', (msg) => {
+  client.user.setActivity(botjson.activity.status, { type: botjson.activity.type })
   console.log(`HEEEYY! ${client.user.tag} is woooorking!`)
 })
 
@@ -84,7 +84,7 @@ client.on("message", msg => {
 	if(!msg.content.startsWith(prefix))
 		return
 
-	if(serverjson.admins.indexOf(msg.member.id) != -1 && adminjs.process(msg)) {
+	if(serverjson.admins.indexOf(msg.member.id) != -1 && adminjs.process(client,msg)) {
 		return
 	} else if(everyonejs.process(msg)) {
 		return
