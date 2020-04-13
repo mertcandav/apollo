@@ -49,5 +49,13 @@ module.exports = {
             array[dex] = array[dex].trimLeft().trimRight()
         }
         return array
+    },
+    findIndexJSONKey: function(key,jsonbase) {
+        let keys = Object.keys(jsonbase)
+        for(let dex = 0; dex < keys.length; dex++) {
+            if(key == keys[dex])
+                return dex
+        }
+        return -1
     }
 }

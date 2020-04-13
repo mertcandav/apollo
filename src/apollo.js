@@ -28,6 +28,7 @@ const protectionjs = require("./engine/protection.js")
 const corejs = require("./engine/core.js")
 const sys_apolloTrade = require("./systems/apolloTrade.ts")
 const everyonejs = require("./commands/everyone.js")
+const apolloTradejson = require("../jsonbase/apolloTrade.json")
 const serverjson = require("../jsonbase/server.json")
 const specialjson = require("../jsonbase/special.json")
 const botjson = require("../jsonbase/bot.json")
@@ -55,6 +56,16 @@ client.on('ready', (msg) => {
 //#region Join - Leave
 
 client.on("guildMemberAdd", msg => {
+	if(apolloTradejson.members[msg.id] == null) {
+		apolloTradejson.members.push({
+			[msg.id]: {
+				coin: 0,
+				inventory: {}
+			}
+		})
+		corejs.saveJSON("./jsonbase/server.json",apolloTradejson)
+	}
+
 	let roles = Object.values(serverjson.values.joinRoles)
 	for(let dex = 0; dex < roles.length; dex++) {
 		console.log(roles[dex])
@@ -70,6 +81,11 @@ client.on("guildMemberAdd", msg => {
 })
 
 client.on("guildMemberRemove", msg => {
+	let members = Object.keys(apolloTradejson.members)
+	if(members.indexOf(msg.id) != -1) {
+		apolloTradejson.members.pop(members[members.indexOf(msg.id)])
+		corejs.saveJSON("./jsonbase/server.json",apolloTradejson)
+	}
 	if(serverjson.channels.join != "") {
   		msg.guild.channels.get(serverjson.channels.leave).send("<@" + msg.user.id + ">" + serverjson.messages.leave)
 	  	return

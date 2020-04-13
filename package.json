@@ -17,5 +17,17 @@
     "@types/node": "^13.11.1",
     "discord.js": "^11.6.4",
     "typescript": "^3.8.3"
-  }
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mertcandav/apollo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mertcandav/apollo/issues"
+  },
+  "homepage": "https://github.com/mertcandav/apollo#readme"
 }
