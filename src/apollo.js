@@ -99,9 +99,9 @@ client.on("message", msg => {
 
 	if(serverjson.admins.indexOf(msg.member.id) != -1 && adminjs.process(client,msg)) {
 		return
-	} else if(everyonejs.process(msg)) {
+	} else if(everyonejs.process(client,msg)) {
 		return
-	} else if(sys_apolloTrade.process(msg)) {
+	} else if(sys_apolloTrade.process(client,msg)) {
 		return
 	} else {
 		msg.reply("Hmm, this command is not defined!")

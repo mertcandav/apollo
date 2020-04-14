@@ -1,8 +1,8 @@
 {
   "name": "apollo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The Apollo discord bot",
-  "main": "apollo.js",
+  "main": "./src/apollo.js",
   "scripts": {
     "start": "node apollo.js"
   },

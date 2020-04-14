@@ -1,6 +1,7 @@
 //#region require
 
 const serverjson = require("../../jsonbase/server.json")
+const botjson = require("../../jsonbase/bot.json")
 const fs = require("fs")
 
 //#endregion
@@ -57,5 +58,41 @@ module.exports = {
                 return dex
         }
         return -1
+    },
+    generateEmbedMsg: function(msg,title,message) {
+        return {
+            embed: {
+                author: {
+                    name: msg.member.displayName,
+                    icon_url: msg.member.user.avatarURL
+                },
+                color: botjson.style.color,
+                title: title,
+                description: message
+            }}
+    },
+    generateEmbedErrMsg: function(msg,title,message) {
+        return {
+            embed: {
+                author: {
+                    name: msg.member.displayName,
+                    icon_url: msg.member.user.avatarURL
+                },
+                color: botjson.style.errcolor,
+                title: title,
+                description: message
+            }}
+    },
+    generateEmbedSuccMsg: function(msg,title,message) {
+        return {
+            embed: {
+                author: {
+                    name: msg.member.displayName,
+                    icon_url: msg.member.user.avatarURL
+                },
+                color: botjson.style.succcolor,
+                title: title,
+                description: message
+            }}
     }
 }

@@ -7,21 +7,34 @@ const serverjson = require("../../jsonbase/server.json")
 //#endregion
 
 module.exports = {
-    process: function(msg) {
+    process: function(client,msg) {
         mval = corejs.cleanCommand(msg.content)
-        if (mval == "author" || mval == "developer") {
+        if(mval == "about") {
             msg.delete()
-            msg.reply("Author is " + botjson.info.author + "\nGitHub: " + botjson.info.authorgituri)
-            return true
-        } else if(mval == "repostory" || mval == "repo" || mval == "gitrepo") {
-            msg.delete()
-            msg.reply("GitHub repostory link of apollo;\n" + botjson.info.gituri)
+            msg.reply({ embed: {
+                author: {
+                    name: client.user.username,
+                    icon_url: client.user.avatarURL
+                },
+                color: botjson.style.color,
+                title: `About Apollo`,
+                fields: [
+                    { name: "**Version**", value: botjson.info.version },
+                    { name: "**Developer**", value: botjson.info.author },
+                    { name: "**Developer GitHub**", value: botjson.info.authorgituri },
+                    { name: "**Apollo Source**", value: botjson.info.gituri },
+                ],
+                footer: {
+                    icon_url: client.user.avatarURL,
+                    text: `© ${new Date().getFullYear()} ${botjson.info.author}` 
+                }
+            }})
             return true
         } else if(mval == "ping") {
             msg.delete()
             msg.reply("Rock!")
             return true
-        }else if(mval == "random") {
+        } else if(mval == "random") {
             random(msg,mval)
             return true
         } else if(mval.startsWith("random ")) {
@@ -90,7 +103,19 @@ function report(msg) {
         msg.delete()
         msg.guild.channels.get(
             serverjson.channels.report
-        ).send("Reportted by <@!" + msg.member.id + ">\n----------\n" + msg.content.substring(8))
+        ).send({
+            embed: {
+                color: botjson.style.color,
+                title: `Report`,
+                fields: [
+                    { name: "**Reportted By**", value: `<@!${msg.member.id}>` },
+                    { name: "**Message**", value: "" + msg.content.substring(8) }
+                ],
+                timestamp: new Date(),
+                footer: {
+                    text: msg.member.displayName
+                }
+        }})
     }
 
     msg.reply(

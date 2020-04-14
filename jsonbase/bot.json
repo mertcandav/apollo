@@ -1,10 +1,16 @@
 {
     "prefix": ";",
     "activity": {
-        "status": "Health Education",
+        "status": "Healt Education",
         "type": "WATCHING"
     },
+    "style": {
+        "color": 2995385,
+        "errcolor": 16711680,
+        "succcolor": 65280
+    },
     "info": {
+        "version": "1.0.0",
         "author": "Mertcan Davulcu",
         "authorgituri": "https://github.com/mertcandav",
         "gituri": "https://github.com/mertcandav/apollo"
