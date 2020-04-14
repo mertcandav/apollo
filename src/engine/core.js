@@ -44,6 +44,9 @@ module.exports = {
     isjoinrole: function(val) {
         return serverjson.values.joinRoles.indexOf(val) != -1
     },
+    isproduct: function(val) {
+        return apolloTradejson.products.indexOf(val) != -1
+    },
     getParams: function(val) {
         let array = val.split(',')
         for(let dex = 0; dex < array.length; dex++) {
