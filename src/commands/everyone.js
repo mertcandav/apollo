@@ -55,8 +55,8 @@ module.exports = {
             return true
         } else if(mval == "apollotradech") {
             msg.delete()
-            msg.reply("Apollo Trade channel is " + (
-                serverjson.channels.trade != "" ? "<#" + serverjson.channels.trade + ">" : "not setted!"))
+            msg.reply(corejs.generateEmbedMsg(msg,"Apollo Trade Channel","Apollo Trade channel is " + (
+                serverjson.channels.trade != "" ? "<#" + serverjson.channels.trade + ">" : "not setted!")))
             return true
         }
         
