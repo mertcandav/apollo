@@ -60,19 +60,21 @@ module.exports = {
         return -1
     },
     generateEmbedMsg: function(msg,title,message) {
-        return {
+        return  msg != null ? {
             embed: {
-                author: {
-                    name: msg.member.displayName,
-                    icon_url: msg.member.user.avatarURL
-                },
                 color: botjson.style.color,
                 title: title,
                 description: message
+            }} :
+            {
+                embed: {
+                    color: botjson.style.color,
+                    title: title,
+                    description: message
             }}
     },
     generateEmbedErrMsg: function(msg,title,message) {
-        return {
+        return  msg != null ? {
             embed: {
                 author: {
                     name: msg.member.displayName,
@@ -81,10 +83,16 @@ module.exports = {
                 color: botjson.style.errcolor,
                 title: title,
                 description: message
+            }} :
+            {
+                embed: {
+                    color: botjson.style.errcolor,
+                    title: title,
+                    description: message
             }}
     },
     generateEmbedSuccMsg: function(msg,title,message) {
-        return {
+        return msg != null ? {
             embed: {
                 author: {
                     name: msg.member.displayName,
@@ -93,10 +101,16 @@ module.exports = {
                 color: botjson.style.succcolor,
                 title: title,
                 description: message
+            }} :
+            {
+                embed: {
+                    color: botjson.style.succcolor,
+                    title: title,
+                    description: message
             }}
     },
     generateEmbedWarnMsg: function(msg,title,message) {
-        return {
+        return msg != null ? {
             embed: {
                 author: {
                     name: msg.member.displayName,
@@ -105,6 +119,12 @@ module.exports = {
                 color: botjson.style.warncolor,
                 title: title,
                 description: message
+            }} :
+            {
+                embed: {
+                    color: botjson.style.warncolor,
+                    title: title,
+                    description: message
             }}
     }
 }
