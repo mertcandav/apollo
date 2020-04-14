@@ -41,7 +41,7 @@ function showshop(client,msg) {
         msg.reply("Please enter only number!")
         return
     }
-    let keys = Object.keys(apolloTradejson.shop)
+    let keys = Object.keys(apolloTradejson.products)
     if(keys.length == 0) {
         msg.reply("There are no products in the shop!")
         return
@@ -67,7 +67,7 @@ function showshop(client,msg) {
         if(keys.length >= counter) {
             obj.embed.fields.push({
                 name: `**${keys[counter-1]}**`,
-                value: `Price: ${apolloTradejson.shop[keys[counter-1]].amount}\nStock: ${apolloTradejson.shop[keys[counter-1]].stock}`,
+                value: `Price: ${apolloTradejson.products[keys[counter-1]].amount}\nStock: ${apolloTradejson.products[keys[counter-1]].stock}`,
                 inline: true
             })
         }
