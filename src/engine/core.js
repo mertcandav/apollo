@@ -1,6 +1,7 @@
 //#region require
 
 const serverjson = require("../../jsonbase/server.json")
+const apolloTradejson = require("../../jsonbase/apolloTrade.json")
 const botjson = require("../../jsonbase/bot.json")
 const fs = require("fs")
 
@@ -45,7 +46,7 @@ module.exports = {
         return serverjson.values.joinRoles.indexOf(val) != -1
     },
     isproduct: function(val) {
-        return apolloTradejson.products.indexOf(val) != -1
+        return Object.keys(apolloTradejson.products).indexOf(val) != -1
     },
     getParams: function(val) {
         let array = val.split(',')

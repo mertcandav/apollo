@@ -17,8 +17,16 @@ module.exports = {
         if(dex == -1) {
             return false
         }
-        let account = apolloTradejson.accounts[msg.member.id]
+
         let mval = corejs.cleanCommand(msg.content)
+        if(corejs.isadmin(msg.member.id) == true) {
+            if(mval.startsWith("product ")) {
+                addproduct(msg)
+                return true
+            }
+        }
+
+        let account = apolloTradejson.accounts[msg.member.id]
         if(mval == "balance") {
             msg.delete()
             msg.reply(corejs.generateEmbedMsg(msg,"Apollo Coins",account.coin))
@@ -67,7 +75,7 @@ function showshop(client,msg) {
         if(keys.length >= counter) {
             obj.embed.fields.push({
                 name: `**${keys[counter-1]}**`,
-                value: `Price: ${apolloTradejson.products[keys[counter-1]].amount}\nStock: ${apolloTradejson.products[keys[counter-1]].stock}`,
+                value: `Price: ${apolloTradejson.products[keys[counter-1]].price}\nStock: ${apolloTradejson.products[keys[counter-1]].stock}`,
                 inline: true
             })
         }
@@ -129,4 +137,40 @@ function showinv(client,msg) {
     }
     val += "```"
     msg.reply(val)*/
+}
+
+function addproduct(msg) {
+    msg.delete()
+    let content = msg.content.substring(8).trimLeft()
+    let args = corejs.getParams(content)
+    if(args.length < 2) {
+        msg.reply("Price and stock must be specified!")
+        return
+    } else if(args.length < 3) {
+        msg.reply("Stock must be specified!")
+        return
+    } else if(args.length > 3) {
+        msg.reply("The number of arguments can be up to three!")
+        return
+    }
+
+    if(isNaN(args[1])) {
+        msg.reply("The price should consist of numbers only!")
+        return
+    } else if(isNaN(args[2])) {
+        msg.reply("The stock should consist of numbers only!")
+        return
+    }
+
+    if(corejs.isproduct(args[0])) {
+        msg.reply("A product with this name is already in stock!")
+        return
+    }
+
+    apolloTradejson.products[args[0]] = {
+        price: parseInt(args[1]),
+        stock: parseInt(args[2])
+    }
+    corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
+    msg.reply("Successfully added product to shop")
 }

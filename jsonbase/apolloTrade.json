@@ -1,20 +1,32 @@
 {
     "products": {
         "Apollo Supporter": {
-            "amount": 100,
+            "price": 100,
             "stock": 100000000
         },
         "Test Product 1": {
-            "amount": 1000000000000000,
+            "price": 1000000000000000,
             "stock": 1
         },
         "Test Product 2": {
-            "amount": 1525000000000000,
+            "price": 1525000000000000,
             "stock": 1
         },
         "Test Product 3": {
-            "amount": 100000,
+            "price": 100000,
             "stock": 1
+        },
+        "TestProduct": {
+            "price": 5,
+            "stock": 50
+        },
+        "TestProduct1": {
+            "price": 5,
+            "stock": 50
+        },
+        "Apollo Member": {
+            "price": 1000,
+            "stock": 50000000
         }
     },
     "accounts": {
