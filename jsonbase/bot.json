@@ -7,7 +7,8 @@
     "style": {
         "color": 2995385,
         "errcolor": 16711680,
-        "succcolor": 65280
+        "succcolor": 65280,
+        "warncolor": 16776960
     },
     "info": {
         "version": "1.0.0",

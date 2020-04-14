@@ -94,5 +94,17 @@ module.exports = {
                 title: title,
                 description: message
             }}
+    },
+    generateEmbedWarnMsg: function(msg,title,message) {
+        return {
+            embed: {
+                author: {
+                    name: msg.member.displayName,
+                    icon_url: msg.member.user.avatarURL
+                },
+                color: botjson.style.warncolor,
+                title: title,
+                description: message
+            }}
     }
 }
