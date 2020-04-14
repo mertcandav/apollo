@@ -45,11 +45,10 @@ module.exports = {
             return true
         } else if(mval == "reportch") {
             msg.delete()
-            msg.reply(
+            msg.reply(corejs.generateEmbedMsg(msg,"Report Channel",
                 serverjson.channels.report != "" ?
-                    "Report channel is <#" + serverjson.channels.report + ">" :
-                    "Ups! No report channels are set!"
-                    )
+                "Report channel is <#" + serverjson.channels.report + ">" :
+                "Ups! No report channels are set!"))
             return true
         } else if(mval.startsWith("report ")) {
             report(msg)
