@@ -269,7 +269,7 @@ function buyproduct(msg) {
     }
     let product = apolloTradejson.products[args[0]]
     let account = apolloTradejson.accounts[msg.member.id]
-    if(product.price > account.coin) {
+    if(product.price * count > account.coin) {
         msg.reply("You don't have enough Apollo Coins to buy this product!")
         return
     }
