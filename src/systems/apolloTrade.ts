@@ -194,6 +194,14 @@ function addproduct(msg) {
         msg.reply("The stock should consist of numbers only!")
         return
     }
+    if(args[1] < 1) {
+        msg.reply("The price should be the lowest 1 Apollo Coin!")
+        return
+    }
+    if(args[2] < 1) {
+        msg.reply("The stock should be the lowest 1 Apollo Coin!")
+        return
+    }
 
     if(corejs.isproduct(args[0])) {
         msg.reply("A product with this name is already in stock!")
