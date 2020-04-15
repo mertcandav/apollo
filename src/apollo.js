@@ -26,6 +26,7 @@ const discordjs = require("discord.js")
 const adminjs = require("./commands/admin.js")
 const protectionjs = require("./engine/protection.js")
 const corejs = require("./engine/core.js")
+const eng_apolloTrade = require("./engine/apolloTrade.ts")
 const sys_apolloTrade = require("./systems/apolloTrade.ts")
 const everyonejs = require("./commands/everyone.js")
 const apolloTradejson = require("../jsonbase/apolloTrade.json")
@@ -94,8 +95,11 @@ client.on("message", msg => {
 	if(protectionjs.process(msg))
 		return
 
-	if(!msg.content.startsWith(prefix))
+	if(!msg.content.startsWith(prefix)) {
+		if(msg.member.id != client.user.id)
+			eng_apolloTrade.process(msg)
 		return
+	}
 
 	if(serverjson.admins.indexOf(msg.member.id) != -1 && adminjs.process(client,msg)) {
 		return
