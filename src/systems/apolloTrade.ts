@@ -54,6 +54,9 @@ module.exports = {
         } else if(mval.startsWith("buy ")) {
             buyproduct(msg)
             return true
+        } else if(mval.startsWith("bet ")) {
+            bet(msg)
+            return true
         }
         return false
     }
@@ -296,4 +299,32 @@ function buyproduct(msg) {
     corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
 
     msg.reply("You have successfully purchased the product!")
+}
+
+function bet(msg) {
+    msg.delete()
+    let cache = msg.content.substring(4).trimLeft()
+    if(isNaN(cache)) {
+        msg.reply("Please enter only number!")
+        return
+    }
+    let amount = parseInt(cache)
+    if(amount < 1) {
+        msg.reply("You have to deposit at least 1 Apollo Coin!")
+        return
+    }
+    let account = apolloTradejson.accounts[msg.member.id]
+    if(account.coin < amount) {
+        msg.reply("You don't have that much Apollo Coin!")
+        return
+    }
+    let chance = corejs.random(100)
+    if(chance >= 50) {
+        account.coin += amount
+        msg.reply("You win the bet!")
+    } else {
+        account.coin -= amount
+        msg.reply("You lost the bet!")
+    }
+    corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
 }
