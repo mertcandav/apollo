@@ -69,6 +69,10 @@ function showshop(client,msg) {
         msg.reply("Please enter only number!")
         return
     }
+    if(cache < 1) {
+        msg.reply("You can specify the page as at least 1!")
+        return
+    }
     let keys = Object.keys(apolloTradejson.products)
     if(keys.length == 0) {
         msg.reply("There are no products in the shop!")
@@ -111,6 +115,10 @@ function showinv(client,msg) {
     let cache = msg.content.substring(4)
     if(isNaN(cache)) {
         msg.reply("Please enter only number!")
+        return
+    }
+    if(cache < 1) {
+        msg.reply("You can specify the page as at least 1!")
         return
     }
     let account = apolloTradejson.accounts[msg.member.id]
