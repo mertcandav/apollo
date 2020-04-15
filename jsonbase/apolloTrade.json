@@ -1,7 +1,30 @@
 {
-    "products": {},
-    "accounts": {},
-    "settings": {
-        "coinPerMsg": 0
+    "products": {
+        "Apollo Supporter": {
+            "amount": 100,
+            "stock": 100000000
+        },
+        "Test Product 1": {
+            "amount": 1000000000000000,
+            "stock": 1
+        },
+        "Test Product 2": {
+            "amount": 1525000000000000,
+            "stock": 1
+        },
+        "Test Product 3": {
+            "amount": 100000,
+            "stock": 1
+        }
+    },
+    "accounts": {
+        "294149228358402049": {
+            "coin": 0,
+            "inventory": {
+                "Apollo Supporter": {
+                    "count": 1
+                }
+            }
+        }
     }
 }

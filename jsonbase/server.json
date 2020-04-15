@@ -1,16 +1,19 @@
 {
     "channels": {
-        "join": "",
-        "leave": "",
-        "report": "",
-        "trade": "",
+        "join": "698990708220100750",
+        "leave": "698990708220100750",
+        "report": "698990729107603554",
+        "trade": "698991544375574599",
         "nsfw": []
     },
     "messages": {
         "join": " YO! Is now here!",
         "leave": " It left us, sad but true!"
     },
-    "admins": [],
+    "admins": [
+        "294149228358402049",
+        "552571647677431827"
+    ],
     "settings": {
         "invitationLinkProtection": false,
         "bannedWordProtection": false,
