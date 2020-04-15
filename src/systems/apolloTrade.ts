@@ -47,6 +47,9 @@ module.exports = {
         } else if(mval.startsWith("inv ")) {
             showinv(client,msg)
             return true
+        } else if(mval.startsWith("cointop ")) {
+            showcointop(msg)
+            return true
         }
         return false
     }
@@ -205,4 +208,38 @@ function setcoinpermsg(msg) {
     apolloTradejson.settings.coinPerMsg = parseInt(content)
     corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
     msg.reply("Apollo Coin per message amount updated successfully!")
+}
+
+function showcointop(msg) {
+    msg.delete()
+    let cache = msg.content.substring(8)
+    if(isNaN(cache)) {
+        msg.reply("Please enter only number!")
+        return
+    }
+    let keys = Object.keys(apolloTradejson.accounts).sort((x,y) =>
+        apolloTradejson.accounts[y].coin - apolloTradejson.accounts[x].coin)
+    let accountPerPage = 5 // Item count of one page
+    let pageCount = Math.ceil(keys.length / accountPerPage)
+    if(pageCount < cache) {
+        msg.reply(`There are no more than ${pageCount} pages on the coin top list.`)
+        return
+    }
+    let firstItem = (accountPerPage * cache) -accountPerPage;
+    keys = keys.slice(firstItem)
+    let obj = { embed: {
+		color: botjson.style.color,
+		title: `Coin Top - Page ${cache}`,
+        fields: []
+    }}
+    for(let counter = 1; counter <= accountPerPage; counter++) {
+        if(keys.length >= counter) {
+            let account = apolloTradejson.accounts[keys[counter -1]]
+            obj.embed.fields.push({
+                name: `**${(firstItem) + counter}**`,
+                value: `Account: <@!${keys[counter-1]}>\nCoin: ${account.coin}`,
+            })
+        }
+    }
+    msg.reply(obj)
 }
