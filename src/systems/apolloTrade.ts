@@ -228,6 +228,10 @@ function setcoinpermsg(msg) {
         msg.reply("Please enter only number")
         return
     }
+    if(content < 0) {
+        msg.reply("It can be set to at least 0!")
+        return
+    }
 
     apolloTradejson.settings.coinPerMsg = parseInt(content)
     corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
