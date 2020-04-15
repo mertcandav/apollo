@@ -23,6 +23,9 @@ module.exports = {
             if(mval.startsWith("product ")) {
                 addproduct(msg)
                 return true
+            } else if(mval.startsWith("rmproduct ")) {
+                removeproduct(msg)
+                return true
             }
         }
 
@@ -173,4 +176,17 @@ function addproduct(msg) {
     }
     corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
     msg.reply("Successfully added product to shop")
+}
+
+function removeproduct(msg) {
+    msg.delete()
+    let content = msg.content.substring(10).trimLeft()
+    if(corejs.isproduct(content) == false) {
+        msg.reply("A product with this name is already not exists in stocks!")
+        return
+    }
+
+    delete apolloTradejson.products[content]
+    corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
+    msg.reply("Successfully removed product from shop")
 }

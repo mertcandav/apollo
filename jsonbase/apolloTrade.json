@@ -23,10 +23,6 @@
         "TestProduct1": {
             "price": 5,
             "stock": 50
-        },
-        "Apollo Member": {
-            "price": 1000,
-            "stock": 50000000
         }
     },
     "accounts": {
