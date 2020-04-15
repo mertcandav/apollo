@@ -298,6 +298,10 @@ function buyproduct(msg) {
             msg.reply("The count should consist of numbers only!")
             return
         }
+        if(count < 1) {
+            msg.reply("The number of pieces can be at least 1!")
+            return
+        }
         count = parseInt(args[1])
     }
     if(corejs.isproduct(args[0]) == false) {
@@ -469,6 +473,10 @@ function sell(msg) {
     } else if(args.length == 2) {
         if(isNaN(args[1])) {
             msg.reply("The count should consist of numbers only!")
+            return
+        }
+        if(count < 1) {
+            msg.reply("The number of pieces can be at least 1!")
             return
         }
         count = parseInt(args[1])
