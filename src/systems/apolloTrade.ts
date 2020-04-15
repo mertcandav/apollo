@@ -321,7 +321,7 @@ function buyproduct(msg) {
             totalcost: product.price * count
         }
     }
-    account.coin -= product.price
+    account.coin -= product.price * count
 
     if(product.stock == count) {
         delete apolloTradejson.products[args[0]]
