@@ -25,6 +25,7 @@ Apollo dicord bot, for everyone.
 + Apollo Report
 + Apollo Trade
 + Styled interface
++ Bets(With Apollo Trade)
 
 Please refer to the documentation for details.
 
