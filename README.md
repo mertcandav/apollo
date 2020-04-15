@@ -23,6 +23,8 @@ Apollo dicord bot, for everyone.
 + Random number generator
 + Voting
 + Apollo Report
++ Apollo Trade
++ Styled interface
 
 Please refer to the documentation for details.
 
