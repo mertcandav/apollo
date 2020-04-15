@@ -66,10 +66,6 @@ function showshop(client,msg) {
     let firstItem = (itemPerPage * cache) -itemPerPage;
     keys = keys.slice(firstItem)
     let obj = { embed: {
-        author: {
-            name: client.user.username,
-            icon_url: client.user.avatarURL
-        },
 		color: botjson.style.color,
 		title: `Shop - Page ${cache}`,
         fields: []
