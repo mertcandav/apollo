@@ -157,7 +157,9 @@ function showinv(client,msg) {
         if(keys.length >= counter) {
             obj.embed.fields.push({
                 name: `**${keys[counter-1]}**`,
-                value: `Item: ${[keys[counter-1]]}\nCount: ${account.inventory[keys[counter-1]].count}`,
+                value: `Item: ${[keys[counter-1]]}
+Count: ${account.inventory[keys[counter-1]].count}
+Total Cost: ${account.inventory[keys[counter-1]].totalcost}`,
                 inline: true
             })
         }
@@ -312,9 +314,11 @@ function buyproduct(msg) {
 
     if(eng_apolloTrade.existsInv(msg.member.id,args[0])) {
         account.inventory[args[0]].count += count
+        account.inventory[args[0]].totalcost += product.price * count
     } else {
         account.inventory[args[0]] = {
-            count: count
+            count: count,
+            totalcost: product.price * count
         }
     }
     account.coin -= product.price
