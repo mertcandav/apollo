@@ -66,6 +66,9 @@ module.exports = {
         } else if(mval.startsWith("pay ")) {
             pay(msg)
             return true
+        } else if(mval.startsWith("sell ")) {
+            sell(msg)
+            return true
         }
         return false
     }
@@ -288,7 +291,7 @@ function buyproduct(msg) {
     let args = corejs.getParams(cache)
     let count = 1
     if(args.length > 2) {
-        msg.reply("There can be a maximum of 3 parameters!")
+        msg.reply("There can be a maximum of 2 parameters!")
         return
     } else if(args.length == 2) {
         if(isNaN(args[1])) {
@@ -453,4 +456,44 @@ function showbalance(msg) {
             title: "Apollo Coins",
             description: apolloTradejson.accounts[cache].coin
         }})
+}
+
+function sell(msg) {
+    msg.delete()
+    let cache = msg.content.substring(5).trimLeft()
+    let args = corejs.getParams(cache)
+    let count = 1
+    if(args.length > 2) {
+        msg.reply("There can be a maximum of 2 parameters!")
+        return
+    } else if(args.length == 2) {
+        if(isNaN(args[1])) {
+            msg.reply("The count should consist of numbers only!")
+            return
+        }
+        count = parseInt(args[1])
+    }
+    if(eng_apolloTrade.existsInv(msg.member.id,args[0]) == false) {
+        msg.reply("A product with this name is not exists in your inventory!")
+        return
+    }
+    let account = apolloTradejson.accounts[msg.member.id]
+    let product = account.inventory[args[0]]
+    if(product.count < count) {
+        msg.reply("You do not have the amount you specify for the product you want to sell!")
+        return
+    }
+
+    let amount = ((product.totalcost / product.count) / 2) * count
+    account.coin += amount
+    product.totalcost -= (amount * 2) * count
+    if(product.count == count) {
+        delete account.inventory[args[0]]
+    } else {
+        product.count -= count
+    }
+
+    corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
+
+    msg.reply(`You have successfully purchased the product, you have received \`\`${amount}\`\` Apollo Coins in total!`)
 }

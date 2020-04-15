@@ -2,7 +2,7 @@
     "products": {
         "Apollo Supporter": {
             "price": 100,
-            "stock": 99999998
+            "stock": 1000000
         },
         "Test Product 1": {
             "price": 1000000000000000,
@@ -15,17 +15,11 @@
     },
     "accounts": {
         "294149228358402049": {
-            "coin": 4344344,
-            "inventory": {
-                "Apollo Supporter": {
-                    "count": 3,
-                    "totalcost": 300
-                },
-                "Test Product 3": {
-                    "count": 1,
-                    "totalcost": 100000
-                }
-            }
+            "coin": 4394494,
+            "inventory": {}
         }
+    },
+    "settings": {
+        "coinPerMsg": 0
     }
 }
