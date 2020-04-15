@@ -34,6 +34,25 @@ module.exports = {
             msg.delete()
             msg.reply("Rock!")
             return true
+        } else if(mval == "help") {
+            msg.delete()
+            msg.reply({ embed: {
+                author: {
+                    name: client.user.username,
+                    icon_url: client.user.avatarURL
+                },
+                color: botjson.style.color,
+                title: `Help Apollo`,
+                fields: [
+                    { name: "**Admins**", value: "https://github.com/mertcandav/apollo/wiki/Admin" },
+                    { name: "**Everyone**", value: "https://github.com/mertcandav/apollo/wiki/Everyone" }
+                ],
+                footer: {
+                    icon_url: client.user.avatarURL,
+                    text: `© ${new Date().getFullYear()} ${botjson.info.author}` 
+                }
+            }})
+            return true
         } else if(mval == "random") {
             random(msg,mval)
             return true
