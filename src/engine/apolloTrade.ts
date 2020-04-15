@@ -1,5 +1,6 @@
 //#region require
 
+const serverjson = require("../../jsonbase/server.json")
 const apolloTradejson = require("../../jsonbase/apolloTrade.json")
 const corejs = require("./core.js")
 
@@ -7,6 +8,9 @@ const corejs = require("./core.js")
 
 module.exports = {
     process: function(msg)  {
+        if(serverjson.channels.trade == "")
+            return
+
         apolloTradejson.accounts[msg.member.id].coin += apolloTradejson.settings.coinPerMsg
         corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
     },
