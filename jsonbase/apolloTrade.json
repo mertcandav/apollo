@@ -27,12 +27,16 @@
     },
     "accounts": {
         "294149228358402049": {
-            "coin": 5794,
+            "coin": 0,
             "inventory": {
                 "Apollo Supporter": {
                     "count": 2
                 }
             }
+        },
+        "552571647677431827": {
+            "coin": 5794,
+            "inventory": {}
         }
     },
     "settings": {

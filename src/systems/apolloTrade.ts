@@ -57,6 +57,9 @@ module.exports = {
         } else if(mval.startsWith("bet ")) {
             bet(msg)
             return true
+        } else if(mval.startsWith("pay ")) {
+            pay(msg)
+            return true
         }
         return false
     }
@@ -335,4 +338,43 @@ function bet(msg) {
         msg.reply(`You lost the bet! You've lost ${amount} Apollo Coins that you bet on!`)
     }
     corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
+}
+
+function pay(msg) {
+    msg.delete()
+    let cache = msg.content.substring(4)
+    let args = corejs.getParams(cache)
+    if(args.length > 3) {
+        msg.reply("There can be a maximum of 3 parameters!")
+        return
+    } else if(args.length < 2) {
+        msg.reply("There can be a minimum of 2 parameters!")
+        return
+    }
+
+    if(isNaN(args[1])) {
+        msg.reply("Please enter only number!")
+        return
+    } else if(args[1] < 1) {
+        msg.reply("You have to deposit at least 1 Apollo Coin!")
+        return
+    }
+    let amount = parseInt(args[1])
+    let baseaccount = apolloTradejson.accounts[msg.member.id]
+    if(baseaccount.coin < amount) {
+        msg.reply("You don't have that much Apollo Coin!")
+        return
+    }
+    let id = args[0].substring(3,args[0].length-1)
+    if(msg.guild.members.get(id) == null) {
+        msg.reply("There is no such member!")
+        return
+    }
+    let account = apolloTradejson.accounts[id]
+
+    baseaccount.coin -= amount
+    account.coin += amount
+
+    corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
+    msg.reply(`Your \`\`${amount}\`\` Apollo Coin has been transferred to <@!${id}>`)
 }
