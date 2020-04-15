@@ -10,6 +10,8 @@ module.exports = {
     process: function(msg)  {
         if(serverjson.channels.trade == "")
             return
+        if(Object.keys(apolloTradejson.accounts).indexOf(msg.member.id) == -1)
+            return
 
         apolloTradejson.accounts[msg.member.id].coin += apolloTradejson.settings.coinPerMsg
         corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
