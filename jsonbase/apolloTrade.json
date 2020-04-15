@@ -34,5 +34,8 @@
                 }
             }
         }
+    },
+    "settings": {
+        "coinPerMsg": 0
     }
 }

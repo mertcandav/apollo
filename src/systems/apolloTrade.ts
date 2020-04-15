@@ -26,6 +26,13 @@ module.exports = {
             } else if(mval.startsWith("rmproduct ")) {
                 removeproduct(msg)
                 return true
+            } else if(mval.startsWith("coinpermsg ")) {
+                setcoinpermsg(msg)
+                return true
+            } else if(mval == "coinpermsg") {
+                msg.delete()
+                msg.reply(`Apollo Coin per message: ${apolloTradejson.settings.coinPerMsg}`)
+                return true
             }
         }
 
@@ -185,4 +192,17 @@ function removeproduct(msg) {
     delete apolloTradejson.products[content]
     corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
     msg.reply("Successfully removed product from shop")
+}
+
+function setcoinpermsg(msg) {
+    msg.delete()
+    let content = msg.content.substring(11).trimLeft()
+    if(isNaN(content)) {
+        msg.reply("Please enter only number")
+        return
+    }
+
+    apolloTradejson.settings.coinPerMsg = parseInt(content)
+    corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
+    msg.reply("Apollo Coin per message amount updated successfully!")
 }
