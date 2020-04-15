@@ -48,7 +48,6 @@ module.exports = {
                     { name: "**Everyone**", value: "https://github.com/mertcandav/apollo/wiki/Everyone" }
                 ],
                 footer: {
-                    icon_url: client.user.avatarURL,
                     text: `© ${new Date().getFullYear()} ${botjson.info.author}` 
                 }
             }})
