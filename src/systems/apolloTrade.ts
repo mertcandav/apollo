@@ -37,6 +37,9 @@ module.exports = {
             } else if(mval.startsWith("apay ")) {
                 apay(msg)
                 return true
+            } else if(mval.startsWith("balance ")) {
+                showbalance(msg)
+                return true
             }
         }
 
@@ -412,4 +415,26 @@ function apay(msg) {
 
     corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
     msg.reply(`\`\`${amount}\`\` Apollo Coin has been transferred to <@!${id}>`)
+}
+
+function showbalance(msg) {
+    msg.delete()
+    let cache = msg.content.substring(12).trimLeft()
+    cache = cache.substring(0,cache.length-1)
+    console.log(cache)
+    if(msg.guild.members.get(cache) == null) {
+        msg.reply("There is no such member!")
+        return
+    }
+    let member = msg.guild.members.get(cache)
+    msg.reply( {
+        embed: {
+            author: {
+                name: member.displayName,
+                icon_url: member.user.avatarURL
+            },
+            color: botjson.style.color,
+            title: "Apollo Coins",
+            description: apolloTradejson.accounts[cache].coin
+        }})
 }

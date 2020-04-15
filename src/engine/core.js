@@ -66,6 +66,10 @@ module.exports = {
     generateEmbedMsg: function(msg,title,message) {
         return  msg != null ? {
             embed: {
+                author: {
+                    name: msg.member.displayName,
+                    icon_url: msg.member.user.avatarURL
+                },
                 color: botjson.style.color,
                 title: title,
                 description: message
