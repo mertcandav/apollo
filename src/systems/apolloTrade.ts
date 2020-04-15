@@ -329,10 +329,10 @@ function bet(msg) {
     let chance = corejs.random(100)
     if(chance >= 50) {
         account.coin += amount
-        msg.reply("You win the bet!")
+        msg.reply(`You win the bet! You have won ${amount} Apollo Coin!`)
     } else {
         account.coin -= amount
-        msg.reply("You lost the bet!")
+        msg.reply(`You lost the bet! You've lost ${amount} Apollo Coins that you bet on!`)
     }
     corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
 }
