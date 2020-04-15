@@ -4,6 +4,7 @@ const dicordjs = require("discord.js")
 const botjson = require("../../jsonbase/bot.json")
 const serverjson = require("../../jsonbase/server.json")
 const corejs = require("../engine/core.js")
+const eng_apolloTrade = require("../engine/apolloTrade.ts")
 const apolloTradejson = require("../../jsonbase/apolloTrade.json")
 
 //#endregion
@@ -49,6 +50,9 @@ module.exports = {
             return true
         } else if(mval.startsWith("cointop ")) {
             showcointop(msg)
+            return true
+        } else if(mval.startsWith("buy ")) {
+            buyproduct(msg)
             return true
         }
         return false
@@ -242,4 +246,54 @@ function showcointop(msg) {
         }
     }
     msg.reply(obj)
+}
+
+function buyproduct(msg) {
+    msg.delete()
+    let cache = msg.content.substring(4).trimLeft()
+    let args = corejs.getParams(cache)
+    let count = 1
+    if(args.length > 2) {
+        msg.reply("There can be a maximum of 3 parameters!")
+        return
+    } else if(args.length == 2) {
+        if(isNaN(args[1])) {
+            msg.reply("The count should consist of numbers only!")
+            return
+        }
+        count = parseInt(args[1])
+    }
+    if(corejs.isproduct(args[0]) == false) {
+        msg.reply("A product with this name is not exists in stocks!")
+        return
+    }
+    let product = apolloTradejson.products[args[0]]
+    let account = apolloTradejson.accounts[msg.member.id]
+    if(product.price > account.coin) {
+        msg.reply("You don't have enough Apollo Coins to buy this product!")
+        return
+    }
+    if(product.stock < count) {
+        msg.reply("The product you want to buy does not have as much stock as you want!")
+        return
+    }
+
+    if(eng_apolloTrade.existsInv(msg.member.id,args[0])) {
+        account.inventory[args[0]].count += count
+    } else {
+        account.inventory[args[0]] = {
+            count: count
+        }
+    }
+    account.coin -= product.price
+
+    if(product.stock == count) {
+        delete apolloTradejson.products[args[0]]
+    } else {
+        product.stock -= count
+    }
+
+    corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
+
+    msg.reply("You have successfully purchased the product!")
 }

@@ -9,5 +9,9 @@ module.exports = {
     process: function(msg)  {
         apolloTradejson.accounts[msg.member.id].coin += apolloTradejson.settings.coinPerMsg
         corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
+    },
+    existsInv: function(id,product) {
+        let products = Object.keys(apolloTradejson.accounts[id].inventory)
+        return products.indexOf(product) != -1
     }
 }
