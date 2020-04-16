@@ -3,6 +3,7 @@
 const corejs = require("../engine/core.js");
 const botjson = require("../../jsonbase/bot.json")
 const serverjson = require("../../jsonbase/server.json")
+const leveljson = require("../../jsonbase/level.json")
 
 //#endregion
 
@@ -75,6 +76,30 @@ module.exports = {
             msg.delete()
             msg.reply(corejs.generateEmbedMsg(msg,"Apollo Trade Channel","Apollo Trade channel is " + (
                 serverjson.channels.trade != "" ? "<#" + serverjson.channels.trade + ">" : "not setted!")))
+            return true
+        } else if(mval == "profile") {
+            msg.delete()
+            let account = serverjson.accounts[msg.member.id]
+            let obj = { embed: {
+                author: {
+                    name: msg.member.displayName,
+                    icon_url: msg.member.user.avatarURL
+                },
+                color: botjson.style.succcolor,
+                title: `Profile`,
+                fields: [
+                    { name: "**Level**", value: `${account.level}/${leveljson.settings.maxLevel}` },
+                    { name: "**Expericence**", value: account.level == leveljson.settings.maxLevel ?
+                        `${account.experience}/${account.level*leveljson.settings.levelMultiplier}` :
+                        `${account.experience}/${(account.level+1)*leveljson.settings.levelMultiplier}`
+                    },
+                    { name: "**Economy**", value:
+`Apollo Coins: ${account.coin}
+Total items: ${Object.keys(account.inventory).length}` },
+                ],
+                timestamp: new Date()
+            }}
+            msg.reply(obj)
             return true
         }
         
