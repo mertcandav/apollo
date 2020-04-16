@@ -168,6 +168,13 @@ module.exports = {
         } else if(mval.startsWith("apollotradech ")) {
             setapollotradech(msg,mval)
             return true
+        } else if(mval.startsWith("levels ")) {
+            setlevelsystem(msg)
+            return true
+        } else if(mval == "levels") {
+            msg.delete()
+            msg.reply(`Level system is ${serverjson.settings.levels ? "enable" : "disable"}`)
+            return true
         }
         
         return false
@@ -777,4 +784,18 @@ function setapollotradech(msg) {
     serverjson.channels.trade = cache
     corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply("<#" + cache + "> is setted Apollo Trade channel!")
+}
+
+function setlevelsystem(msg) {
+    msg.delete()
+    let content = msg.content.substring(7).trimLeft()
+    content = corejs.getBoolValue(content)
+    if(content == "invalid") {
+        msg.reply("You have entered an invalid value!")
+        return
+    }
+
+    serverjson.settings.levels = content
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
+    msg.reply("Level system state updated successfully!")
 }

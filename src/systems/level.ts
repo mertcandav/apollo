@@ -34,6 +34,13 @@ module.exports = {
                 msg.delete()
                 msg.reply(`Experience per message: ${leveljson.settings.expPerMsg}`)
                 return true
+            } else if(mval.startsWith("maxlevel ")) {
+                setmaxlevel(msg)
+                return true
+            } else if(mval == "maxlevel") {
+                msg.delete()
+                msg.reply(`Maximum level: ${leveljson.settings.maxLevel}`)
+                return true
             }
         }
         return false
@@ -72,4 +79,21 @@ function setexppermsg(msg) {
     leveljson.settings.expPerMsg = parseInt(content)
     corejs.saveJSON("./jsonbase/level.json",leveljson)
     msg.reply("Experience per message amount updated successfully!")
+}
+
+function setmaxlevel(msg) {
+    msg.delete()
+    let content = msg.content.substring(9).trimLeft()
+    if(isNaN(content)) {
+        msg.reply("Please enter only number")
+        return
+    }
+    if(content < 1) {
+        msg.reply("It can be set to at least 1!")
+        return
+    }
+
+    leveljson.settings.maxLevel = parseInt(content)
+    corejs.saveJSON("./jsonbase/level.json",leveljson)
+    msg.reply("Maximum level updated successfully!")
 }
