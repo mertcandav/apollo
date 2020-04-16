@@ -23,6 +23,10 @@ module.exports = {
             if(mval.startsWith("levelmultiplier ")) {
                 setLevelMultiplier(msg)
                 return true
+            } else if(mval == "levelmultiplier") {
+                msg.delete()
+                msg.reply(`Level multiplier: ${leveljson.settings.levelMultiplier}`)
+                return true
             }
         }
         return false
@@ -43,5 +47,5 @@ function setLevelMultiplier(msg) {
 
     leveljson.settings.levelMultiplier = parseInt(content)
     corejs.saveJSON("./jsonbase/level.json",leveljson)
-    msg.reply("Level multiplier amount updated successfully!")
+    msg.reply("Level multiplier updated successfully!")
 }
