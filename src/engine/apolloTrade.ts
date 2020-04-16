@@ -10,14 +10,14 @@ module.exports = {
     process: function(msg)  {
         if(serverjson.channels.trade == "")
             return
-        if(Object.keys(apolloTradejson.accounts).indexOf(msg.member.id) == -1)
+        if(Object.keys(serverjson.accounts).indexOf(msg.member.id) == -1)
             return
 
-        apolloTradejson.accounts[msg.member.id].coin += apolloTradejson.settings.coinPerMsg
-        corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
+        serverjson.accounts[msg.member.id].coin += serverjson.settings.coinPerMsg
+        corejs.saveJSON("./jsonbase/server.json",serverjson)
     },
     existsInv: function(id,product) {
-        let products = Object.keys(apolloTradejson.accounts[id].inventory)
+        let products = Object.keys(serverjson.accounts[id].inventory)
         return products.indexOf(product) != -1
     }
 }

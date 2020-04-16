@@ -14,7 +14,7 @@ module.exports = {
         if(serverjson.channels.trade == "") {
             return false
         }
-        let dex = corejs.findIndexJSONKey(msg.member.id,apolloTradejson.accounts)
+        let dex = corejs.findIndexJSONKey(msg.member.id,serverjson.accounts)
         if(dex == -1) {
             return false
         }
@@ -43,7 +43,7 @@ module.exports = {
             }
         }
 
-        let account = apolloTradejson.accounts[msg.member.id]
+        let account = serverjson.accounts[msg.member.id]
         if(mval == "balance") {
             msg.delete()
             msg.reply(corejs.generateEmbedMsg(msg,"Apollo Coins",account.coin))
@@ -133,7 +133,7 @@ function showinv(client,msg) {
         msg.reply("You can specify the page as at least 1!")
         return
     }
-    let account = apolloTradejson.accounts[msg.member.id]
+    let account = serverjson.accounts[msg.member.id]
     let keys = Object.keys(account.inventory)
     if(keys.length == 0) {
         msg.reply("There are no item in the your inventory!")
@@ -168,13 +168,6 @@ Total Cost: ${account.inventory[keys[counter-1]].totalcost}`,
         }
     }
     msg.reply(obj)
-    /*let val = `Shop; Page: ${cache}\`\`\`typescript`
-    for(let counter = 1; counter <= itemPerPage; counter++) {
-        val += keys.length >= counter ? `\n${keys[counter-1]}; Price:${apolloTradejson.shop[keys[counter-1]].amount} ; Stock:${
-            apolloTradejson.shop[keys[counter-1]].stock}` : ""
-    }
-    val += "```"
-    msg.reply(val)*/
 }
 
 function addproduct(msg) {
@@ -258,8 +251,8 @@ function showcointop(msg) {
         msg.reply("Please enter only number!")
         return
     }
-    let keys = Object.keys(apolloTradejson.accounts).sort((x,y) =>
-        apolloTradejson.accounts[y].coin - apolloTradejson.accounts[x].coin)
+    let keys = Object.keys(serverjson.accounts).sort((x,y) =>
+        serverjson.accounts[y].coin - serverjson.accounts[x].coin)
     let accountPerPage = 5 // Item count of one page
     let pageCount = Math.ceil(keys.length / accountPerPage)
     if(pageCount < cache) {
@@ -275,7 +268,7 @@ function showcointop(msg) {
     }}
     for(let counter = 1; counter <= accountPerPage; counter++) {
         if(keys.length >= counter) {
-            let account = apolloTradejson.accounts[keys[counter -1]]
+            let account = serverjson.accounts[keys[counter -1]]
             obj.embed.fields.push({
                 name: `**${(firstItem) + counter}**`,
                 value: `Account: <@!${keys[counter-1]}>\nCoin: ${account.coin}`,
@@ -309,7 +302,7 @@ function buyproduct(msg) {
         return
     }
     let product = apolloTradejson.products[args[0]]
-    let account = apolloTradejson.accounts[msg.member.id]
+    let account = serverjson.accounts[msg.member.id]
     if(product.price * count > account.coin) {
         msg.reply("You don't have enough Apollo Coins to buy this product!")
         return
@@ -337,6 +330,7 @@ function buyproduct(msg) {
     }
 
     corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
 
     msg.reply("You have successfully purchased the product!")
 }
@@ -353,7 +347,7 @@ function bet(msg) {
         msg.reply("You have to deposit at least 1 Apollo Coin!")
         return
     }
-    let account = apolloTradejson.accounts[msg.member.id]
+    let account = serverjson.accounts[msg.member.id]
     if(account.coin < amount) {
         msg.reply("You don't have that much Apollo Coin!")
         return
@@ -366,7 +360,7 @@ function bet(msg) {
         account.coin -= amount
         msg.reply(`You lost the bet! You've lost ${amount} Apollo Coins that you bet on!`)
     }
-    corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
 }
 
 function pay(msg) {
@@ -389,7 +383,7 @@ function pay(msg) {
         return
     }
     let amount = parseInt(args[1])
-    let baseaccount = apolloTradejson.accounts[msg.member.id]
+    let baseaccount = serverjson.accounts[msg.member.id]
     if(baseaccount.coin < amount) {
         msg.reply("You don't have that much Apollo Coin!")
         return
@@ -399,12 +393,12 @@ function pay(msg) {
         msg.reply("There is no such member!")
         return
     }
-    let account = apolloTradejson.accounts[id]
+    let account = serverjson.accounts[id]
 
     baseaccount.coin -= amount
     account.coin += amount
 
-    corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply(`Your \`\`${amount}\`\` Apollo Coin has been transferred to <@!${id}>`)
 }
 
@@ -433,10 +427,10 @@ function apay(msg) {
         msg.reply("There is no such member!")
         return
     }
-    let account = apolloTradejson.accounts[id]
+    let account = serverjson.accounts[id]
     account.coin += amount
 
-    corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply(`\`\`${amount}\`\` Apollo Coin has been transferred to <@!${id}>`)
 }
 
@@ -458,7 +452,7 @@ function showbalance(msg) {
             },
             color: botjson.style.color,
             title: "Apollo Coins",
-            description: apolloTradejson.accounts[cache].coin
+            description: serverjson.accounts[cache].coin
         }})
 }
 
@@ -485,7 +479,7 @@ function sell(msg) {
         msg.reply("A product with this name is not exists in your inventory!")
         return
     }
-    let account = apolloTradejson.accounts[msg.member.id]
+    let account = serverjson.accounts[msg.member.id]
     let product = account.inventory[args[0]]
     if(product.count < count) {
         msg.reply("You do not have the amount you specify for the product you want to sell!")
@@ -501,7 +495,7 @@ function sell(msg) {
         product.count -= count
     }
 
-    corejs.saveJSON("./jsonbase/apolloTrade.json",apolloTradejson)
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
 
     msg.reply(`You have successfully purchased the product, you have received \`\`${amount}\`\` Apollo Coins in total!`)
 }

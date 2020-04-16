@@ -17,26 +17,19 @@
     "settings": {
         "invitationLinkProtection": false,
         "bannedWordProtection": false,
-        "funUri": false
+        "funUri": false,
+        "levels": false
     },
     "values": {
         "joinRoles": [],
         "muteRole": "",
-        "bannedWords": [
-            "fuck",
-            "shit",
-            "bitch",
-            "dick",
-            "bastard",
-            "asshole",
-            "ass",
-            "prat",
-            "tit",
-            "wanker",
-            "boob"
-        ],
-        "funUris": [
-            "https://www.youtube.com/watch?v=jNitjm7N2Yc"
-        ]
+        "bannedWords": [],
+        "funUris": []
+    },
+    "accounts": {
+        "294149228358402049": {
+            "coin": 4394644,
+            "inventory": {}
+        }
     }
 }

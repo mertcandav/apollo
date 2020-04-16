@@ -13,12 +13,6 @@
             "stock": 1
         }
     },
-    "accounts": {
-        "294149228358402049": {
-            "coin": 4394494,
-            "inventory": {}
-        }
-    },
     "settings": {
         "coinPerMsg": 0
     }
