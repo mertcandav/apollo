@@ -28,6 +28,8 @@
     },
     "accounts": {
         "294149228358402049": {
+            "expericence": 0,
+            "level": 0,
             "coin": null,
             "inventory": {}
         }
