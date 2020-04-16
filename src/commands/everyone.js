@@ -90,7 +90,7 @@ module.exports = {
                 fields: [
                     { name: "**Level**", value: `${account.level}/${leveljson.settings.maxLevel}` },
                     { name: "**Expericence**", value: account.level == leveljson.settings.maxLevel ?
-                        `${account.experience}/${account.level*leveljson.settings.levelMultiplier}` :
+                        `Maximum` :
                         `${account.experience}/${(account.level+1)*leveljson.settings.levelMultiplier}`
                     },
                     { name: "**Economy**", value:

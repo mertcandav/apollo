@@ -27,6 +27,7 @@ const adminjs = require("./commands/admin.js")
 const protectionjs = require("./engine/protection.js")
 const corejs = require("./engine/core.js")
 const eng_apolloTrade = require("./engine/apolloTrade.ts")
+const eng_level = require("./engine/level.ts")
 const sys_apolloTrade = require("./systems/apolloTrade.ts")
 const sys_level = require("./systems/level.ts")
 const everyonejs = require("./commands/everyone.js")
@@ -99,8 +100,10 @@ client.on("message", msg => {
 		return
 
 	if(!msg.content.startsWith(prefix)) {
-		if(msg.member.id != client.user.id)
+		if(msg.member.id != client.user.id) {
 			eng_apolloTrade.process(msg)
+			eng_level.process(msg)
+		}
 		return
 	}
 

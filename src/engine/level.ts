@@ -17,9 +17,10 @@ module.exports = {
         if(account.level == leveljson.settings.maxLevel) {
             account.coin += leveljson.settings.expPerMsg
         } else {
-            account.expericence += serverjson.settings.expPerMsg
-            if((account.level + 1) * leveljson.settings.levelMultiplier <= account.expericence) {
+            account.experience += leveljson.settings.expPerMsg
+            if((account.level + 1) * leveljson.settings.levelMultiplier <= account.experience) {
                 account.level += 1
+                account.experience = 0
             }
         }
         corejs.saveJSON("./jsonbase/server.json",serverjson)
