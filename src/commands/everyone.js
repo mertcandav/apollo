@@ -112,12 +112,17 @@ Total items: ${Object.keys(account.inventory).length}` },
                 color: botjson.style.warncolor,
                 title: `Server State`,
                 fields: [
-                    { name: "System", value:
+                    { name: "**Members**", value:
+`**Total**: ${msg.guild.members.size}
+**Bot**: ${msg.guild.members.filter(x => x.user.bot).size}
+**Online**: ${msg.guild.members.filter(x => x.presence.status != "offline").size}
+**Offline**: ${msg.guild.members.filter(x => x.presence.status == "offline").size}` },
+                    { name: "**System**", value:
 `**Apolo Trade**: ${serverjson.channels.trade != "" ? "Enable" : "Disable"}
 **Apolo Report**: ${serverjson.channels.report != "" ? "Enable" : "Disable"}
 **Apolo FunUri**: ${serverjson.settings.funUri ? "Enable" : "Disable"}
 **Level Sysem**: ${serverjson.settings.levels ? "Enable" : "Disable"}` },
-                    { name: "Protection", value:
+                    { name: "**Protection**", value:
 `**Bannedword Protection**: ${serverjson.settings.bannedWordProtection ? "Enable" : "Disable"}
 **Invitation Link Protection**: ${serverjson.settings.invitationLinkProtection ? "Enable" : "Disable"}`}
                 ],
