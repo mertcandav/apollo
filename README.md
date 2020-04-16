@@ -26,6 +26,9 @@ Apollo dicord bot, for everyone.
 + Apollo Trade
 + Styled interface
 + Bets(With Apollo Trade)
++ Profiles
++ Server state summary
++ Level system
 
 Please refer to the documentation for details.
 
