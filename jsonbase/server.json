@@ -18,7 +18,7 @@
         "invitationLinkProtection": false,
         "bannedWordProtection": false,
         "funUri": false,
-        "levels": false
+        "levels": true
     },
     "values": {
         "joinRoles": [],

@@ -28,6 +28,7 @@ const protectionjs = require("./engine/protection.js")
 const corejs = require("./engine/core.js")
 const eng_apolloTrade = require("./engine/apolloTrade.ts")
 const sys_apolloTrade = require("./systems/apolloTrade.ts")
+const sys_level = require("./systems/level.ts")
 const everyonejs = require("./commands/everyone.js")
 const apolloTradejson = require("../jsonbase/apolloTrade.json")
 const serverjson = require("../jsonbase/server.json")
@@ -106,6 +107,8 @@ client.on("message", msg => {
 	} else if(everyonejs.process(client,msg)) {
 		return
 	} else if(sys_apolloTrade.process(client,msg)) {
+		return
+	} else if(sys_level.process(client,msg)) {
 		return
 	} else {
 		msg.reply("Hmm, this command is not defined!")

@@ -1,0 +1,7 @@
+{
+    "settings": {
+        "expPerMsg": 1,
+        "levelMultiplier": 100,
+        "maxLevel": 1000000
+    }
+}
