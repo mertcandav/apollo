@@ -440,6 +440,7 @@ function unadmin(msg,mval) {
 }
 
 function admins(msg) {
+    msg.delete()
     let val = "Admins;\n"
     serverjson.admins.forEach((key) => {
         val += "<@!" + key + ">\n"
