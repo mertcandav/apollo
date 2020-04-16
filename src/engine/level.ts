@@ -20,6 +20,9 @@ module.exports = {
             account.experience += leveljson.settings.expPerMsg
             if((account.level + 1) * leveljson.settings.levelMultiplier <= account.experience) {
                 account.level += 1
+                if(serverjson.channels.trade != "") {
+                   account.coin += account.level 
+                }
                 account.experience = 0
             }
         }
