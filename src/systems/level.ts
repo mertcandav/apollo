@@ -27,6 +27,13 @@ module.exports = {
                 msg.delete()
                 msg.reply(`Level multiplier: ${leveljson.settings.levelMultiplier}`)
                 return true
+            } else if(mval.startsWith("exppermsg ")) {
+                setexppermsg(msg)
+                return true
+            } else if(mval == "exppermsg") {
+                msg.delete()
+                msg.reply(`Experience per message: ${leveljson.settings.expPerMsg}`)
+                return true
             }
         }
         return false
@@ -48,4 +55,21 @@ function setLevelMultiplier(msg) {
     leveljson.settings.levelMultiplier = parseInt(content)
     corejs.saveJSON("./jsonbase/level.json",leveljson)
     msg.reply("Level multiplier updated successfully!")
+}
+
+function setexppermsg(msg) {
+    msg.delete()
+    let content = msg.content.substring(10).trimLeft()
+    if(isNaN(content)) {
+        msg.reply("Please enter only number")
+        return
+    }
+    if(content < 1) {
+        msg.reply("It can be set to at least 1!")
+        return
+    }
+
+    leveljson.settings.expPerMsg = parseInt(content)
+    corejs.saveJSON("./jsonbase/level.json",leveljson)
+    msg.reply("Experience per message amount updated successfully!")
 }
