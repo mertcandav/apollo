@@ -42,11 +42,14 @@ module.exports = {
                 msg.delete()
                 msg.reply(`Maximum level: ${leveljson.settings.maxLevel}`)
                 return true
-            } else if(mval.startsWith("leveltop ")) {
-                showleveltop(msg)
-                return true
             }
         }
+
+        if(mval.startsWith("leveltop ")) {
+            showleveltop(msg)
+            return true
+        }
+
         return false
     }
 }
