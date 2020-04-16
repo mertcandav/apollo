@@ -14,7 +14,7 @@ module.exports = {
             return
 
         let account = serverjson.accounts[msg.member.id]
-        if(account.level == leveljson.settings.maxLevel) {
+        if(account.level == leveljson.settings.maxLevel && serverjson.channels.trade != "") {
             account.coin += leveljson.settings.expPerMsg
         } else {
             account.experience += leveljson.settings.expPerMsg
