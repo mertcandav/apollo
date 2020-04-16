@@ -13,7 +13,7 @@ module.exports = {
         if(Object.keys(serverjson.accounts).indexOf(msg.member.id) == -1)
             return
 
-        serverjson.accounts[msg.member.id].coin += serverjson.settings.coinPerMsg
+        serverjson.accounts[msg.member.id].coin += apolloTradejson.settings.coinPerMsg
         corejs.saveJSON("./jsonbase/server.json",serverjson)
     },
     existsInv: function(id,product) {
