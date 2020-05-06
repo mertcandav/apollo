@@ -438,7 +438,6 @@ function showbalance(msg) {
     msg.delete()
     let cache = msg.content.substring(12).trimLeft()
     cache = cache.substring(0,cache.length-1)
-    console.log(cache)
     if(msg.guild.members.get(cache) == null) {
         msg.reply("There is no such member!")
         return

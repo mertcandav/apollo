@@ -69,7 +69,6 @@ client.on("guildMemberAdd", msg => {
 
 	let roles = Object.values(serverjson.values.joinRoles)
 	for(let dex = 0; dex < roles.length; dex++) {
-		console.log(roles[dex])
 		msg.addRole(msg.guild.roles.get(roles[dex])).catch(
 			() => {
 				/* Catch */
