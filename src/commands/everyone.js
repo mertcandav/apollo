@@ -89,7 +89,7 @@ module.exports = {
                 title: `Profile`,
                 fields: [
                     { name: "**Level**", value: `${account.level}/${leveljson.settings.maxLevel}` },
-                    { name: "**Expericence**", value: account.level == leveljson.settings.maxLevel ?
+                    { name: "**Experience**", value: account.level == leveljson.settings.maxLevel ?
                         `Maximum` :
                         `${account.experience}/${(account.level+1)*leveljson.settings.levelMultiplier}`
                     },
@@ -118,9 +118,9 @@ Total items: ${Object.keys(account.inventory).length}` },
 **Online**: ${msg.guild.members.filter(x => x.presence.status != "offline").size}
 **Offline**: ${msg.guild.members.filter(x => x.presence.status == "offline").size}` },
                     { name: "**System**", value:
-`**Apolo Trade**: ${serverjson.channels.trade != "" ? "Enable" : "Disable"}
-**Apolo Report**: ${serverjson.channels.report != "" ? "Enable" : "Disable"}
-**Apolo FunUri**: ${serverjson.settings.funUri ? "Enable" : "Disable"}
+`**Apollo Trade**: ${serverjson.channels.trade != "" ? "Enable" : "Disable"}
+**Apollo Report**: ${serverjson.channels.report != "" ? "Enable" : "Disable"}
+**Apollo FunUri**: ${serverjson.settings.funUri ? "Enable" : "Disable"}
 **Level Sysem**: ${serverjson.settings.levels ? "Enable" : "Disable"}` },
                     { name: "**Protection**", value:
 `**Bannedword Protection**: ${serverjson.settings.bannedWordProtection ? "Enable" : "Disable"}

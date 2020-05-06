@@ -60,7 +60,7 @@ client.on('ready', (msg) => {
 
 client.on("guildMemberAdd", msg => {
 	serverjson.accounts[msg.id] = {
-			expericence: 0,
+			experience: 0,
 			level: 0,
 			coin: 0,
 			inventory: {}
