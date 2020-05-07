@@ -228,7 +228,7 @@ function showmsgtop(msg) {
             let account = serverjson.accounts[keys[counter -1]]
             obj.embed.fields.push({
                 name: `**${(firstItem) + counter}**`,
-                value: `Account: <@!${keys[counter-1]}>\nMessages: ${account.level}`,
+                value: `Account: <@!${keys[counter-1]}>\nMessages: ${account.messages}`,
             })
         }
     }
