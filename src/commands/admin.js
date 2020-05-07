@@ -441,11 +441,20 @@ function unadmin(msg,mval) {
 
 function admins(msg) {
     msg.delete()
-    let val = "Admins;\n"
+    let obj = { embed: {
+		color: botjson.style.color,
+		title: `Admins`,
+        fields: []
+    }}
+    val = ""
     serverjson.admins.forEach((key) => {
-        val += "<@!" + key + ">\n"
+        val += "<@!" + key + "> "
     })
-    msg.reply(val)
+    obj.embed.fields.push({
+	name: "**All**",
+        value: val,
+    })
+    msg.reply(obj)
 }
 
 function banword(msg,mval) {
