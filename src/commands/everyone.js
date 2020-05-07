@@ -4,6 +4,7 @@ const corejs = require("../engine/core.js");
 const botjson = require("../../jsonbase/bot.json")
 const serverjson = require("../../jsonbase/server.json")
 const leveljson = require("../../jsonbase/level.json")
+const specialjson = require("../../jsonbase/special.json")
 
 //#endregion
 
@@ -131,6 +132,9 @@ Total items: ${Object.keys(account.inventory).length}` },
             }}
             msg.reply(obj)
             return true
+        } else if(mval.startsWith("msgtop ")) {
+            showmsgtop(msg)
+            return true
         }
         
         return false
@@ -195,4 +199,38 @@ function report(msg) {
         "Your report has been received, thanks!" :
         "Ups! No report channels are set!"
     )
+}
+
+function showmsgtop(msg) {
+    msg.delete()
+    let cache = msg.content.substring(8)
+    if(isNaN(cache)) {
+        msg.reply("Please enter only number!")
+        return
+    }
+    let keys = Object.keys(serverjson.accounts).sort((x,y) =>
+        serverjson.accounts[y].messages - serverjson.accounts[x].messages)
+    let accountPerPage = 5 // Item count of one page
+    let pageCount = Math.ceil(keys.length / accountPerPage)
+    if(pageCount < cache) {
+        msg.reply(`There are no more than ${pageCount} pages on the level top list.`)
+        return
+    }
+    let firstItem = (accountPerPage * cache) -accountPerPage;
+    keys = keys.slice(firstItem)
+    let obj = { embed: {
+		color: botjson.style.color,
+		title: `Message Top - Page ${cache}`,
+        fields: []
+    }}
+    for(let counter = 1; counter <= accountPerPage; counter++) {
+        if(keys.length >= counter) {
+            let account = serverjson.accounts[keys[counter -1]]
+            obj.embed.fields.push({
+                name: `**${(firstItem) + counter}**`,
+                value: `Account: <@!${keys[counter-1]}>\nMessages: ${account.level}`,
+            })
+        }
+    }
+    msg.reply(obj)
 }
