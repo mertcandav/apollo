@@ -28,6 +28,7 @@ const protectionjs = require("./engine/protection.js")
 const corejs = require("./engine/core.js")
 const eng_apolloTrade = require("./engine/apolloTrade.ts")
 const eng_level = require("./engine/level.ts")
+const eng_general = require("./engine/general.ts")
 const sys_apolloTrade = require("./systems/apolloTrade.ts")
 const sys_level = require("./systems/level.ts")
 const everyonejs = require("./commands/everyone.js")
@@ -61,6 +62,7 @@ client.on('ready', (msg) => {
 client.on("guildMemberAdd", msg => {
 	serverjson.accounts[msg.id] = {
 			experience: 0,
+			messages: 0,
 			level: 0,
 			coin: 0,
 			inventory: {}
@@ -102,6 +104,7 @@ client.on("message", msg => {
 		if(msg.member.id != client.user.id) {
 			eng_apolloTrade.process(msg)
 			eng_level.process(msg)
+			eng_general.process(client,msg)
 		}
 		return
 	}

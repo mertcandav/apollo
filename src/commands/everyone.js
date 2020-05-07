@@ -93,6 +93,7 @@ module.exports = {
                         `Maximum` :
                         `${account.experience}/${(account.level+1)*leveljson.settings.levelMultiplier}`
                     },
+                    { name: "**Messages**", value: `${account.messages}` },
                     { name: "**Economy**", value:
 `Apollo Coins: ${account.coin}
 Total items: ${Object.keys(account.inventory).length}` },
