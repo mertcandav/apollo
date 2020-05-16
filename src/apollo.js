@@ -67,7 +67,7 @@ client.on("guildMemberAdd", msg => {
 			coin: 0,
 			inventory: {}
 	}
-	corejs.saveJSON("./jsonbase/serverjson.json",serverjson)
+	corejs.saveJSON("./jsonbase/server.json",serverjson)
 
 	let roles = Object.values(serverjson.values.joinRoles)
 	for(let dex = 0; dex < roles.length; dex++) {
