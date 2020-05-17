@@ -175,6 +175,9 @@ module.exports = {
             msg.delete()
             msg.reply(`Level system is ${serverjson.settings.levels ? "enable" : "disable"}`)
             return true
+        } else if(mval == "customize") {
+            customize(msg)
+            return true
         }
         
         return false
@@ -808,4 +811,23 @@ function setlevelsystem(msg) {
     serverjson.settings.levels = content
     corejs.saveJSON("./jsonbase/server.json",serverjson)
     msg.reply("Level system state updated successfully!")
+}
+
+function customize(msg) {
+    msg.delete()
+    msg.guild.members.forEach(member => {
+        let dex = corejs.findIndexJSONKey(member.id,serverjson.accounts)
+        if(dex == -1) {
+            serverjson.accounts[member.id] = {
+                experience: 0,
+                messages: 0,
+                level: 0,
+                coin: 0,
+                inventory: {}
+            }
+        }
+    }); 
+
+    corejs.saveJSON("./jsonbase/server.json",serverjson)
+    msg.reply("Customized successfully!")    
 }
