@@ -29,6 +29,7 @@ Apollo dicord bot, for everyone.
 + Profiles
 + Server state summary
 + Level system
++ Automatic customize to server
 
 Please refer to the documentation for details.
 
