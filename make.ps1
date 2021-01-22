@@ -1,4 +1,0 @@
-# Mertcan Davulcu
-
-# Make
-make
